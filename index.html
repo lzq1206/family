@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>李氏家谱｜世系树</title>
-  <meta name="description" content="李氏家谱网页：世系树、人物详情、故事整理与统计概览。" />
+  <title>李氏家谱｜竖幅世系树</title>
+  <meta name="description" content="李氏家谱网页：竖幅世系树、人物详情、故事整理与统计概览。" />
   <style>
     :root{--bg:#f6f1e8;--card:#fffaf2;--ink:#1f1b16;--muted:#6f6559;--line:#dfd3c0;--accent:#8b5a2b;--accent2:#395c4a;--shadow:0 12px 30px rgba(78,58,34,.10);--radius:20px}
     *{box-sizing:border-box} html{scroll-behavior:smooth}
@@ -28,11 +28,13 @@
     .section-title{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:14px}.section-title h2{margin:0;font-size:24px}.section-title p{margin:0;color:var(--muted);font-size:13px}
     .stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.mini{padding:14px;border:1px solid #eadfce;border-radius:16px;background:#fffdf9}.mini b{display:block;font-size:22px;color:var(--accent)}.mini span{font-size:12px;color:var(--muted)}
     .layout{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}
-    .tree{position:relative;padding-left:16px}.tree::before{content:'';position:absolute;left:26px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--line),transparent)}
-    .gen{position:relative;margin:0 0 14px 0;padding:0 0 0 18px}.gen::before{content:'';position:absolute;left:18px;top:24px;width:18px;height:2px;background:var(--line)}
-    .gen-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9;cursor:pointer;user-select:none}
-    .gen-head:hover{border-color:#ceb996}.gen-title{display:flex;flex-direction:column;gap:2px}.gen-title strong{font-size:16px}.gen-title small{color:var(--muted);font-size:12px}
-    .gen-body{padding:12px 12px 0 12px}.chips{display:flex;flex-wrap:wrap;gap:8px}.person{padding:7px 10px;border-radius:999px;background:#f2eadf;border:1px solid #eadfce;font-size:13px;cursor:pointer;transition:.15s transform,.15s background}.person:hover{transform:translateY(-1px);background:#efe0cc}
+    .tree{position:relative;padding-left:26px}.tree::before{content:'';position:absolute;left:12px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--line),transparent)}
+    .gen{position:relative;margin:0 0 16px 0;padding:0 0 0 18px}.gen::before{content:'';position:absolute;left:4px;top:24px;width:18px;height:2px;background:var(--line)}
+    .gen-card{padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9;box-shadow:0 6px 18px rgba(78,58,34,.06)}
+    .gen-card:hover{border-color:#ceb996}
+    .gen-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.gen-title{display:flex;flex-direction:column;gap:2px}.gen-title strong{font-size:16px}.gen-title small{color:var(--muted);font-size:12px}
+    .gen-body{padding:0}.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px}.person{padding:9px 10px;border-radius:12px;background:#f2eadf;border:1px solid #eadfce;font-size:13px;cursor:pointer;transition:.15s transform,.15s background;line-height:1.35}.person:hover{transform:translateY(-1px);background:#efe0cc}
+    .person .sub{display:block;font-size:11px;color:var(--muted);margin-top:3px}
     .search{display:flex;gap:10px;align-items:center;margin-bottom:14px}.search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;outline:none;font-size:15px}
     .detail{position:sticky;top:14px;padding:18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fffdf9,#fff7ed)}
     .detail h3{margin:4px 0 8px;font-size:26px}.detail .muted{color:var(--muted);line-height:1.8}.detail .kv{display:grid;grid-template-columns:72px 1fr;gap:8px 10px;margin-top:14px;font-size:14px}.detail .k{color:var(--muted)}.quote{margin-top:14px;padding:14px;border-left:4px solid #d8c4a5;background:#f8f2e8;border-radius:12px;color:#51483d;line-height:1.85}
@@ -47,9 +49,9 @@
 <div class="wrap">
   <section class="hero">
     <div class="panel hero-main">
-      <div class="eyebrow">李氏家谱｜世系树 + 人物详情 + 故事整理</div>
+      <div class="eyebrow">李氏家谱｜竖幅世系树 + 人物详情 + 故事整理</div>
       <h1>李氏家谱<br/>网页化展示</h1>
-      <p class="lead">已补入第 21、22 世，并继续延展到第 23、24 世的 OCR 可辨识信息；页面改为可点击的树状世系图，点任意人物即可在右侧查看详情。末尾附上谱中故事整理。</p>
+      <p class="lead">已补入第 21、22 世，并继续延展到第 23、24 世的 OCR 可辨识信息；页面改为自上而下的竖幅世系树，点任意人物即可在右侧查看详情。末尾附上谱中故事整理。</p>
       <div class="meta">
         <span class="chip">来源：/family/data/paper/李氏家族（全部内容）.pdf</span>
         <span class="chip">形式：静态页面</span>
@@ -76,7 +78,7 @@
     </div>
 
     <div class="card span-8">
-      <div class="section-title"><div><h2>世系树</h2><p>左侧按世代展开，点击姓名可看人物详情</p></div></div>
+      <div class="section-title"><div><h2>世系树</h2><p>自上而下展开；每一世一层，点击姓名可看人物详情</p></div></div>
       <div class="search"><input id="search" placeholder="搜索世代 / 姓名 / 关键词" /></div>
       <div class="tree" id="tree"></div>
     </div>
@@ -179,12 +181,14 @@ function render(filter=''){
     return !f || hay.includes(f);
   }).map(g => `
     <div class="gen">
-      <div class="gen-head">
-        <div class="gen-title"><strong>${g.gen} · ${g.title}</strong><small>${g.people.length} 个可点节点</small></div>
-        <div class="muted small">点击姓名查看详情</div>
-      </div>
-      <div class="gen-body">
-        <div class="chips">${g.people.map(p => `<span class="person" data-gen="${g.gen}" data-title="${g.title}" data-name="${p.name}" data-note="${encodeURIComponent(p.note)}">${p.name}</span>`).join('')}</div>
+      <div class="gen-card">
+        <div class="gen-head">
+          <div class="gen-title"><strong>${g.gen} · ${g.title}</strong><small>${g.people.length} 个可点节点</small></div>
+          <div class="muted small">竖向展开</div>
+        </div>
+        <div class="gen-body">
+          <div class="chips">${g.people.map(p => `<span class="person" data-gen="${g.gen}" data-title="${g.title}" data-name="${p.name}" data-note="${encodeURIComponent(p.note)}">${p.name}<span class="sub">${g.gen}</span></span>`).join('')}</div>
+        </div>
       </div>
     </div>`).join('') || '<div class="muted">没有匹配结果。</div>';
 
