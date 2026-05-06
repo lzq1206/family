@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>李氏家谱｜数字化展示</title>
+  <meta name="description" content="李氏家谱网页版展示（OCR整理版），用于 GitHub Pages 浏览。" />
+  <style>
+    :root{
+      --bg:#f5f1e8; --card:#fffaf2; --ink:#1f1b16; --muted:#6f6559;
+      --line:#dfd3c0; --accent:#8b5a2b; --accent2:#395c4a; --shadow:0 12px 30px rgba(78,58,34,.10);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:ui-serif, Georgia, "Times New Roman", "Noto Serif SC", serif;background:linear-gradient(180deg,#fbf8f2 0%,var(--bg) 100%);color:var(--ink);}
+    a{color:inherit}
+    .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 64px}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:stretch}
+    .panel{background:rgba(255,250,242,.9);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .hero-main{padding:34px}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:7px 12px;border-radius:999px;background:#efe3d2;color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.04em}
+    h1{margin:14px 0 10px;font-size:clamp(34px,5vw,58px);line-height:1.06}
+    .lead{font-size:18px;line-height:1.9;color:var(--muted);max-width:58ch;margin:0 0 18px}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .chip{padding:8px 12px;border-radius:999px;background:#f2eadf;border:1px solid #eadfce;color:#5f5345;font-size:13px}
+    .hero-side{padding:20px;display:grid;gap:14px}
+    .stat{padding:18px;border-radius:18px;background:linear-gradient(180deg,#fffdf8,#f7efe2);border:1px solid #e7dcc8}
+    .stat .label{font-size:13px;color:var(--muted);margin-bottom:6px}
+    .stat .value{font-size:30px;font-weight:800;color:var(--accent)}
+    .stat .desc{font-size:13px;color:var(--muted);line-height:1.6}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:18px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:22px}
+    .span-7{grid-column:span 7}.span-5{grid-column:span 5}.span-12{grid-column:span 12}
+    .section-title{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:14px}
+    .section-title h2{margin:0;font-size:24px}
+    .section-title p{margin:0;color:var(--muted);font-size:13px}
+    .chart{width:100%;height:260px;display:block}
+    .bars{display:grid;gap:12px}
+    .bar-row{display:grid;grid-template-columns:80px 1fr 48px;gap:10px;align-items:center}
+    .bar-track{height:12px;background:#efe6d7;border-radius:999px;overflow:hidden;border:1px solid #eadfcf}
+    .bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),#c28a4c)}
+    .bar-label{font-size:14px;color:#473d32}
+    .bar-value{text-align:right;font-weight:700;color:var(--accent)}
+    .filter{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+    .filter input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;outline:none;font-size:15px}
+    .gens{display:grid;gap:12px}
+    details.gen{border:1px solid var(--line);border-radius:16px;background:#fffdf9;overflow:hidden}
+    details.gen summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center;font-weight:700}
+    details.gen summary::-webkit-details-marker{display:none}
+    .gen-body{padding:0 18px 16px;color:#4a4035;line-height:1.8}
+    .name-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .name{padding:6px 10px;border-radius:999px;background:#f2eadf;border:1px solid #eadfce;font-size:13px}
+    .timeline{display:grid;gap:12px}
+    .tl{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:14px 0;border-bottom:1px dashed #e5d9c7}
+    .tl:last-child{border-bottom:none}
+    .year{font-weight:800;color:var(--accent)}
+    .tl p{margin:0;color:#51483d;line-height:1.75}
+    .muted{color:var(--muted)}
+    .footer{margin-top:18px;font-size:12px;color:var(--muted);line-height:1.7}
+    @media (max-width: 920px){
+      .hero,.grid{grid-template-columns:1fr}
+      .span-7,.span-5,.span-12{grid-column:span 12}
+      .hero-main{padding:24px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="panel hero-main">
+        <div class="eyebrow">李氏家谱｜OCR整理版</div>
+        <h1>李氏家谱<br/>数字化展示</h1>
+        <p class="lead">把《李氏家族（全部内容）.pdf》整理成适合 GitHub Pages 浏览的静态网页。页面优先展示世系索引、家族概况、人口变化与家训摘要；个别早期字词保留为 OCR 识别结果，后续可继续人工校对。</p>
+        <div class="meta">
+          <span class="chip">来源：/family/data/paper/李氏家族（全部内容）.pdf</span>
+          <span class="chip">展示：静态单页</span>
+          <span class="chip">适配：GitHub Pages</span>
+        </div>
+      </div>
+      <div class="panel hero-side">
+        <div class="stat">
+          <div class="label">家族人口</div>
+          <div class="value">135</div>
+          <div class="desc">2019 年 7 月统计：男 69、女 66，共 135 人（谢世、嫁出不计）。</div>
+        </div>
+        <div class="stat">
+          <div class="label">家族文化统计（大专以上）</div>
+          <div class="value">33</div>
+          <div class="desc">解放前 0；1950s—2000s 共 33 人，体现出明显的教育积累。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card span-7">
+        <div class="section-title">
+          <div>
+            <h2>家族人口变化</h2>
+            <p>来自 PDF 中的统计页</p>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 640 260" role="img" aria-label="家族人口变化图">
+          <defs>
+            <linearGradient id="lineGrad" x1="0" x2="1">
+              <stop offset="0%" stop-color="#8b5a2b"/>
+              <stop offset="100%" stop-color="#c28a4c"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="640" height="260" fill="#fffaf2" rx="18"></rect>
+          <g stroke="#eadfce" stroke-width="1">
+            <line x1="60" y1="30" x2="60" y2="210"/>
+            <line x1="60" y1="210" x2="600" y2="210"/>
+            <line x1="60" y1="150" x2="600" y2="150"/>
+            <line x1="60" y1="90" x2="600" y2="90"/>
+          </g>
+          <polyline id="popLine" fill="none" stroke="url(#lineGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          <g id="popDots"></g>
+          <g id="popLabels" font-size="13" fill="#6f6559"></g>
+        </svg>
+      </div>
+      <div class="card span-5">
+        <div class="section-title">
+          <div>
+            <h2>教育结构</h2>
+            <p>大专以上人数分布</p>
+          </div>
+        </div>
+        <div class="bars" id="eduBars"></div>
+      </div>
+      <div class="card span-12">
+        <div class="section-title">
+          <div>
+            <h2>世系索引</h2>
+            <p>基于 OCR 提取整理的可辨识名称；标注“待校”者建议后续逐页校对</p>
+          </div>
+          <div class="filter" style="min-width:min(420px,100%);margin:0">
+            <input id="search" placeholder="搜索世代 / 人名 / 关键词" />
+          </div>
+        </div>
+        <div class="gens" id="gens"></div>
+      </div>
+      <div class="card span-7">
+        <div class="section-title">
+          <div>
+            <h2>家族记忆</h2>
+            <p>从谱中可见的几个公共节点</p>
+          </div>
+        </div>
+        <div class="timeline">
+          <div class="tl"><div class="year">1877</div><p>仅存 4 家人。</p></div>
+          <div class="tl"><div class="year">1949</div><p>解放时统计为 42 人，后续家族逐步恢复与扩展。</p></div>
+          <div class="tl"><div class="year">2019</div><p>统计到 135 人，家族规模明显扩大。</p></div>
+          <div class="tl"><div class="year">家训</div><p>谱中收录“李氏家训（十八句）”，网页暂做摘要展示，后续可补全文版。</p></div>
+        </div>
+      </div>
+      <div class="card span-5">
+        <div class="section-title">
+          <div>
+            <h2>说明</h2>
+            <p>部署与校对建议</p>
+          </div>
+        </div>
+        <p class="muted" style="margin:0;line-height:1.9">1. 当前页面是静态版，适合直接推到 GitHub Pages。<br>2. 若后续要更完整，可继续把 PDF 分页 OCR 后，补成“世系树 + 原文页码”双层结构。<br>3. 如需保留原始 PDF，建议放到 GitHub Releases 或外部网盘链接，避免仓库文件过大。</p>
+      </div>
+    </section>
+
+    <div class="footer">注：本页为家谱网页化首版，重点是“可浏览、可检索、可继续校对”。若你要，我可以下一步继续把每一世做成更像族谱的树状页面。🦞</div>
+  </div>
+
+  <script>
+    const generations = [
+      { gen: '第1世', title: '李十九', names: ['李十九'], note: 'OCR 可辨识为始祖，后续支系仍可继续补强。' },
+      { gen: '第2世', title: '李三汉', names: ['李三汉'], note: '可辨识主名：李三汉。' },
+      { gen: '第3世', title: '李德方', names: ['李德方'], note: '可辨识主名：李德方。' },
+      { gen: '第4世', title: '李文忠', names: ['李文忠','铭','荣','亨'], note: '页中可见铭、荣、亨等分支。' },
+      { gen: '第5世', title: '李铭五', names: ['李铭五','成','积','效','和','英'], note: '页中可见成、积、效、和、英等名号。' },
+      { gen: '第6世', title: '李英三官仓', names: ['李英三','官仓','稳'], note: 'OCR 中可见“英三官仓”“稳”等字样。' },
+      { gen: '第7世', title: '李稳佐 / 李致收', names: ['李稳佐','李致收','叢','华'], note: '分支中出现致、收、叢、华。' },
+      { gen: '第8世', title: '李致收 / 李叢华', names: ['孟夏','边','昇','钏','钞','银','绪'], note: '页内可见孟夏、边、昇、钏、钞、银、绪等。' },
+      { gen: '第9世', title: '李绪银 / 李秤', names: ['李绪银','秤','壘','柏','稼','穑'], note: '页内可见秤、壘、柏、稼、穑。' },
+      { gen: '第10世', title: '李国俊 / 李命', names: ['李国俊','李命','国佺','国随','国僚','国延','国傑'], note: '家族中出现国字辈多个分支。' },
+      { gen: '第11世', title: '李国佺 / 李希美', names: ['李希美','李国佺','李调鼎','李壘'], note: '可见希美、国佺、调鼎等。' },
+      { gen: '第12世', title: '李调鼎 / 李齐膺', names: ['李调鼎','李齐膺','李齐芳','李齐芬','李齐桌'], note: '齐字辈可辨识较完整。' },
+      { gen: '第13世', title: '李昭宗 / 李缵宗', names: ['李昭宗','李缵宗','李嗣宗','李扬宗','李明宗'], note: '宗字辈与后续支系开始展开。' },
+      { gen: '第14世', title: '李文学 / 李行廷 / 李信善', names: ['李文学','李行廷','李信善','李信士'], note: '廷、信两支在此世较清晰。' },
+      { gen: '第15世', title: '李约 / 李维 / 李纲 / 李经', names: ['李约','李维','李纲','李经','李缙','李绅','李绶','李綸','李纯','李綍'], note: '绳、维、纲、经等字辈较明显。' },
+      { gen: '第16世', title: '李如棫 / 李如楷 / 李如桐', names: ['李如棫','李如桥','李如椿','李如栎','李如桂','李如棠','李如楫','李如楠','李如楷','李如栋','李如桐','李如槐'], note: '如字辈分支丰富。' },
+      { gen: '第17世', title: '李焕瑄 / 李如楠支系', names: ['李焕瑄','李焕施','李焕瑕','李焕璣','李焕珍','李焕璞','李焕瑷','李焕玿','李焕璸','李焕璋','李焕琇','李焕瑛','李焕琳','李焕瑢'], note: '焕字辈可辨识度较高。' },
+      { gen: '第18世', title: '李清宝 / 李秀岩 / 李秀峯', names: ['李清宝','李清瑞','李清珸','李清瑗','李清璔','李清和','李秀岩','李秀峯','李秀成','李保金','李样','李振基','李承基'], note: '清字辈与秀字辈并行出现。' },
+      { gen: '第19世', title: '李秀岩 / 李秀成 / 李考', names: ['李秀岩','李秀峯','李秀成','李保金','李文考','李武考','李应考','李忠考'], note: '可见文、武、应、忠考字辈。' },
+      { gen: '第20世', title: '李文 / 李武 / 李应 / 李忠', names: ['李文','李武','李应','李忠','月','景','润','望','能','勤','亮'], note: '年轻一代分支仍在延展。' }
+    ];
+
+    const gensEl = document.getElementById('gens');
+    const searchEl = document.getElementById('search');
+
+    function render(filter='') {
+      const f = filter.trim().toLowerCase();
+      gensEl.innerHTML = generations.filter(g => {
+        const hay = [g.gen, g.title, g.note, ...g.names].join(' ').toLowerCase();
+        return !f || hay.includes(f);
+      }).map(g => `
+        <details class="gen" open>
+          <summary><span>${g.gen} · ${g.title}</span><span class="muted">${g.names.length} 个可辨识名号</span></summary>
+          <div class="gen-body">
+            <div>${g.note}</div>
+            <div class="name-list">${g.names.map(n => `<span class="name">${n}</span>`).join('')}</div>
+          </div>
+        </details>
+      `).join('') || '<div class="muted">没有匹配结果。</div>';
+    }
+
+    searchEl.addEventListener('input', e => render(e.target.value));
+    render();
+
+    const pop = [
+      { year:'1877', value:4, label:'仅存 4 家人' },
+      { year:'1949', value:42, label:'解放时 42 人' },
+      { year:'2019', value:135, label:'2019 年 135 人' }
+    ];
+    const maxV = Math.max(...pop.map(d => d.value));
+    const points = pop.map((d, i) => {
+      const x = 80 + i * 250;
+      const y = 210 - (d.value / maxV) * 150;
+      return `${x},${y}`;
+    }).join(' ');
+    document.getElementById('popLine').setAttribute('points', points);
+    document.getElementById('popDots').innerHTML = pop.map((d, i) => {
+      const x = 80 + i * 250;
+      const y = 210 - (d.value / maxV) * 150;
+      return `<circle cx="${x}" cy="${y}" r="7" fill="#fff" stroke="#8b5a2b" stroke-width="4"></circle>`;
+    }).join('');
+    document.getElementById('popLabels').innerHTML = pop.map((d, i) => {
+      const x = 80 + i * 250;
+      const y = 210 - (d.value / maxV) * 150;
+      return `<text x="${x}" y="${y - 16}" text-anchor="middle" fill="#8b5a2b" font-weight="700">${d.value}</text><text x="${x}" y="232" text-anchor="middle">${d.year}</text><text x="${x}" y="246" text-anchor="middle" fill="#9a8c7d">${d.label}</text>`;
+    }).join('');
+
+    const edu = [
+      ['1950s',3],['1960s',4],['1970s',3],['1980s',9],['1990s',13],['2000+',1]
+    ];
+    const maxEdu = Math.max(...edu.map(d => d[1]));
+    document.getElementById('eduBars').innerHTML = edu.map(([label,val]) => `
+      <div class="bar-row">
+        <div class="bar-label">${label}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${(val/maxEdu*100).toFixed(1)}%"></div></div>
+        <div class="bar-value">${val}</div>
+      </div>
+    `).join('');
+  </script>
+</body>
+</html>
