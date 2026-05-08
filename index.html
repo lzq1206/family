@@ -27,6 +27,7 @@
     .span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-4{grid-column:span 4}.span-7{grid-column:span 7}.span-5{grid-column:span 5}
     .section-title{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:14px}.section-title h2{margin:0;font-size:24px}.section-title p{margin:0;color:var(--muted);font-size:13px}
     .stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.mini{padding:14px;border:1px solid #eadfce;border-radius:16px;background:#fffdf9}.mini b{display:block;font-size:22px;color:var(--accent)}.mini span{font-size:12px;color:var(--muted)}
+    .view-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:14px;flex-wrap:wrap}.view-tabs{display:inline-flex;padding:4px;border:1px solid #e6d7c5;border-radius:999px;background:#fffaf2;box-shadow:0 6px 18px rgba(78,58,34,.06)}.view-tab{border:0;background:transparent;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:700;color:#6f6559;cursor:pointer}.view-tab.active{background:linear-gradient(180deg,#8b5a2b,#a86f3d);color:#fff;box-shadow:0 8px 18px rgba(139,90,43,.22)}.view-note{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
     .layout{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}
     .tree{position:relative;padding-left:26px}.tree::before{content:'';position:absolute;left:12px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--line),transparent)}
     .gen{position:relative;margin:0 0 16px 0;padding:0 0 0 18px}.gen::before{content:'';position:absolute;left:4px;top:24px;width:18px;height:2px;background:var(--line)}
@@ -34,15 +35,18 @@
     .gen-card:hover{border-color:#ceb996}
     .gen-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.gen-title{display:flex;flex-direction:column;gap:2px}.gen-title strong{font-size:16px}.gen-title small{color:var(--muted);font-size:12px}
     .gen-body{padding:0}.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px}.person{padding:9px 10px;border-radius:12px;background:#f2eadf;border:1px solid #eadfce;font-size:13px;cursor:pointer;transition:.15s transform,.15s background;line-height:1.35}.person:hover{transform:translateY(-1px);background:#efe0cc}
-    .person .sub{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+    .person .sub{display:block;font-size:11px;color:var(--muted);margin-top:3px}.person-block{display:grid;gap:8px}.person-meta{font-size:12px;line-height:1.6;color:var(--muted);padding-left:2px}.branch-children{display:grid;gap:8px;margin-left:14px;padding-left:14px;border-left:2px solid #e5d7c5}.branch-children .person{font-size:12px;padding:8px 9px;background:#fbf3e7}
+    .lineage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lineage-card{padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9;box-shadow:0 6px 18px rgba(78,58,34,.06)}.lineage-card h3{margin:0 0 6px;font-size:18px}.lineage-card .line{font-size:13px;line-height:1.7;color:#4f453a}.lineage-card .minirow{display:grid;grid-template-columns:72px 1fr;gap:6px 10px;margin-top:10px;font-size:13px}.lineage-card .k{color:var(--muted)}
     .search{display:flex;gap:10px;align-items:center;margin-bottom:14px}.search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;outline:none;font-size:15px}
     .detail{position:sticky;top:14px;padding:18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fffdf9,#fff7ed)}
     .detail h3{margin:4px 0 8px;font-size:26px}.detail .muted{color:var(--muted);line-height:1.8}.detail .kv{display:grid;grid-template-columns:72px 1fr;gap:8px 10px;margin-top:14px;font-size:14px}.detail .k{color:var(--muted)}.quote{margin-top:14px;padding:14px;border-left:4px solid #d8c4a5;background:#f8f2e8;border-radius:12px;color:#51483d;line-height:1.85}
     .story-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.story{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9}.story h4{margin:0 0 8px;font-size:18px}.story p{margin:0;color:#4f453a;line-height:1.85;font-size:14px}.story .tag{display:inline-block;padding:4px 8px;margin-bottom:8px;border-radius:999px;background:#efe3d2;color:var(--accent);font-size:12px;font-weight:700}
+    .supp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.supp-card{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9}.supp-card h4{margin:0 0 8px;font-size:18px}.supp-card p{margin:0;color:#4f453a;line-height:1.8;font-size:14px}.supp-card .tag{display:inline-block;padding:4px 8px;margin-bottom:8px;border-radius:999px;background:#eef5ef;color:var(--accent2);font-size:12px;font-weight:700}
     .bar-row{display:grid;grid-template-columns:88px 1fr 44px;gap:10px;align-items:center;margin:10px 0}.bar-track{height:12px;border-radius:999px;background:#efe6d7;border:1px solid #eadfcf;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),#c28a4c)}.bar-label{font-size:14px;color:#473d32}.bar-value{text-align:right;font-weight:700;color:var(--accent)}
     .muted{color:var(--muted)} .footer{margin-top:18px;font-size:12px;color:var(--muted);line-height:1.7}
+    .record{margin-top:14px;padding:14px;border-radius:14px;background:#f7efe2;border:1px solid #eadfcf}.record .label{font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:.06em;margin-bottom:6px}.record .text{line-height:1.85;color:#4f453a}
     .modal{position:fixed;inset:0;background:rgba(31,27,22,.48);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modal-box{max-width:680px;width:100%;background:#fffdf9;border-radius:22px;border:1px solid #e8dcc8;box-shadow:0 30px 80px rgba(0,0,0,.2);padding:18px}.modal-top{display:flex;justify-content:space-between;gap:12px;align-items:start}.close{border:0;background:#efe3d2;color:#6f4b24;border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:700}.modal h3{margin:0 0 6px;font-size:28px}.modal .sub{color:var(--muted);line-height:1.7}.modal .list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.small{font-size:13px}
-    @media (max-width: 980px){.hero,.layout,.story-grid,.stats-grid{grid-template-columns:1fr}.span-8,.span-4,.span-7,.span-5,.span-12{grid-column:span 12}.detail{position:static}}
+    @media (max-width: 980px){.hero,.layout,.story-grid,.stats-grid,.lineage-grid{grid-template-columns:1fr}.span-8,.span-4,.span-7,.span-5,.span-12{grid-column:span 12}.detail{position:static}}
   </style>
 </head>
 <body>
@@ -51,7 +55,7 @@
     <div class="panel hero-main">
       <div class="eyebrow">李氏家谱｜竖幅世系树 + 人物详情 + 故事整理</div>
       <h1>李氏家谱<br/>网页化展示</h1>
-      <p class="lead">已补入第 21、22 世，并继续延展到第 23、24 世的 OCR 可辨识信息；页面改为自上而下的竖幅世系树，点任意人物即可在右侧查看详情。末尾附上谱中故事整理。</p>
+      <p class="lead">已补入第 21、22 世，并继续延展到第 23、24 世的 OCR 可辨识信息；现在可在“世系方式 / 树状图”两个标签间切换。另把旧谱序缺失、PDF 第 8-9 页补录、李姓溯源与家训说明单独放入谱前栏目。</p>
       <div class="meta">
         <span class="chip">来源：/family/data/paper/李氏家族（全部内容）.pdf</span>
         <span class="chip">形式：静态页面</span>
@@ -77,8 +81,19 @@
       </div>
     </div>
 
+    <div class="card span-12">
+      <div class="section-title"><div><h2>谱前补记与说明</h2><p>把旧谱序缺失、PDF 补页与说明性文字单独放在一个栏目</p></div></div>
+      <div class="supp-grid" id="supplements"></div>
+    </div>
+
     <div class="card span-8">
-      <div class="section-title"><div><h2>世系树</h2><p>自上而下展开；每一世一层，点击姓名可看人物详情</p></div></div>
+      <div class="view-head">
+        <div><h2 id="viewTitle">世系方式</h2><p id="viewDesc" class="view-note">按世代浏览，每个人物都保留“辈分 / 姓名 / 子女 / 相属 / 记事”信息。</p></div>
+        <div class="view-tabs" role="tablist" aria-label="家谱展示方式">
+          <button id="lineageTab" class="view-tab active" type="button">世系方式</button>
+          <button id="treeTab" class="view-tab" type="button">树状图</button>
+        </div>
+      </div>
       <div class="search"><input id="search" placeholder="搜索世代 / 姓名 / 关键词" /></div>
       <div class="tree" id="tree"></div>
     </div>
@@ -89,8 +104,8 @@
         <div class="eyebrow">默认选中</div>
         <h3>李十九</h3>
         <div class="sub">始祖节点。点击其他人物后，这里会展示世代、可辨识姓名、原文备注与相关分支。</div>
-        <div class="kv"><div class="k">世代</div><div>第 1 世</div><div class="k">状态</div><div>可点击查看</div><div class="k">备注</div><div>OCR 可辨识为始祖，后续分支在后世展开。</div></div>
-        <div class="quote">本页以“可浏览、可检索、可继续校对”为目标；早期几世仍保留 OCR 识别痕迹，后续可逐页补正。</div>
+        <div class="kv"><div class="k">世代</div><div>第 1 世</div><div class="k">状态</div><div>可点击查看</div><div class="k">记事</div><div>OCR 可辨识为始祖，后续分支在后世展开。</div></div>
+        <div class="record"><div class="label">记事说明</div><div class="text">本页以“可浏览、可检索、可继续校对”为目标；早期几世仍保留 OCR 识别痕迹，后续可逐页补正。</div></div>
       </div>
     </div>
 
@@ -105,7 +120,7 @@
     </div>
   </section>
 
-  <div class="footer">注：此版已补 21、22 世，并将人物点击详情、树状浏览、故事整理放在同一页。若你要，我下一步可以继续把每一支细化成更像族谱软件的分枝图。🦞</div>
+  <div class="footer">注：此版已补 21、22 世，并将人物点击详情、记事字段、谱前补记栏目、世系方式 / 树状图切换与故事整理放在同一页。若你要，我下一步可以继续把每一支细化成更像族谱软件的分枝图。🦞</div>
 </div>
 
 <div class="modal" id="modal"><div class="modal-box"><div class="modal-top"><div><div class="eyebrow" id="mgen">人物详情</div><h3 id="mname"></h3><div class="sub" id="mdesc"></div></div><button class="close" id="closeBtn">关闭</button></div><div class="list" id="mchips"></div><div class="quote" id="mnote"></div></div></div>
@@ -138,6 +153,43 @@ const generations = [
   {gen:'第24世',title:'李朝朝 / 李喜朝 / 李随朝后裔',people:[{name:'李朝朝',note:'应归入第 24 世。'}, {name:'李随朝',note:'第 24 世出现。'}, {name:'李喜朝',note:'第 24 世出现。'}, {name:'李娜',note:'可见于后续页面。'}, {name:'李欢娜',note:'可见于后续页面。'}, {name:'李浩森',note:'可见于后续页面。'}, {name:'李浩桦',note:'可见于后续页面。'}, {name:'李雪峰',note:'可见于后续页面。'}, {name:'李立峯',note:'可见于后续页面。'}, {name:'李占峯',note:'可见于后续页面。'}]}
 ];
 
+const personMeta = {
+  '李念正': {gen:'第21世', relation:'父辈', childrenNames:'李召麒', zodiac:'未详', note:'21世节点。李召麒的记事已归入其下。'},
+  '李召麒': {gen:'第22世', relation:'子', parent:'李念正', childrenNames:'昶、烨', zodiac:'猴', note:'生于一九九三年十月十三日。毕业于清华大学，二〇一二届，主攻汽车设计和制造、经济管理双学位。记事在第21世李念正下面。'},
+  '李必成': {childrenNames:'李朝春', zodiac:'狗', note:'一九三四年生，嫁南礼教村，随夫定居河南省平顶山，二〇〇二年十一月六日卒于河南平顶山，生一子李朝春。'},
+  '李可昌': {childrenNames:'巧珍、月珍、排珍、世珍、义珍、芳珍、孟珍', zodiac:'蛇、羊、虎、虎、牛、猪、狗、鼠、猪、猪、鸡', note:'谱页列出多名子女与相属；分别嫁北礼教村、蔡村、马村等。'},
+  '李满贞': {childrenNames:'养泽、样红、芳芳、小芳', zodiac:'虎、马、鸡、猴', note:'一九五一年生，卒于二〇一七年，嫁杜村刘新岗。'},
+  '李满囤': {childrenNames:'陈福有、有民、双民、正民', zodiac:'虎、猴、...', note:'一九三七年生，卒于二〇一六年，嫁许家湾陈谋。'},
+  '李哲峯': {childrenNames:'佳玺、琳烨', zodiac:'龙、鼠', note:'一九九五年三月二十二日生，高中毕业。'},
+  '李占峯': {childrenNames:'佳澎、捷康', zodiac:'龙、龙', note:'二〇〇八年三月二十六日生。'},
+  '李立峯': {childrenNames:'娃琳、森', zodiac:'鸡、猪', note:'一九九八年生。'},
+  '李争平': {childrenNames:'田田', zodiac:'鸡', note:'二〇〇〇年十月山西农业大学毕业。'},
+  '李卫平': {childrenNames:'博阳、天骄、一冉、毛毛', zodiac:'牛、虎、龙、虎', note:'一九九八年十月海南大学毕业。'},
+  '李佳星': {childrenNames:'静怡', zodiac:'狗', note:'二〇〇六年十一月初四。'},
+  '李天峰': {childrenNames:'世懋', zodiac:'龙', note:'二〇一二年腊月二十四生。'},
+  '李雪峰': {childrenNames:'—', zodiac:'未详', note:'表格见原页。'},
+  '李虎峰': {childrenNames:'霖、烨', zodiac:'牛', note:'表格见原页。'},
+  '李磊峰': {childrenNames:'—', zodiac:'未详', note:'表格见原页。'}
+};
+
+const childMap = {
+  '李念正': ['李召麒'],
+  '李召麒': ['昶', '烨'],
+  '李必成': ['李朝春'],
+  '李满贞': ['养泽', '样红', '芳芳', '小芳'],
+  '李满囤': ['陈福有', '有民', '双民', '正民'],
+  '李哲峯': ['佳玺', '琳烨'],
+  '李占峯': ['佳澎', '捷康'],
+  '李立峯': ['娃琳', '森'],
+  '李争平': ['田田'],
+  '李卫平': ['博阳', '天骄', '一冉', '毛毛'],
+  '李佳星': ['静怡'],
+  '李天峰': ['世懋']
+};
+
+const peopleIndex = new Map();
+generations.forEach(g => g.people.forEach(p => peopleIndex.set(p.name, { ...p, gen: g.gen, title: g.title })));
+
 const stories = [
   {tag:'故事 1',title:'李国俊焚谱：乱世护谱的家族记忆',text:'谱中写到李国俊在特殊年代曾为保全家谱与家族记忆，选择焚毁部分资料。这个故事不是为了歌颂“焚毁”，而是说明族谱在战乱、搬迁与政治风波中如何艰难保存，也提醒后人：谱牒既是记忆，也是风险。'},
   {tag:'故事 2',title:'蔡村演戏与“崇祯王上梅山”',text:'谱里记到蔡村曾上演《崇祯王上梅山》，因戏中情节触动皇姑，后人遂有“不再演”的传说。这个故事展示了地方戏、口耳相传与家族禁忌如何交织，成为谱中的文化记忆。'},
@@ -149,6 +201,7 @@ const treeEl = document.getElementById('tree');
 const detailEl = document.getElementById('detail');
 const storiesEl = document.getElementById('stories');
 const barsEl = document.getElementById('bars');
+const suppEl = document.getElementById('supplements');
 const searchEl = document.getElementById('search');
 const modal = document.getElementById('modal');
 const closeBtn = document.getElementById('closeBtn');
@@ -157,40 +210,143 @@ const mname = document.getElementById('mname');
 const mdesc = document.getElementById('mdesc');
 const mchips = document.getElementById('mchips');
 const mnote = document.getElementById('mnote');
+const lineageTab = document.getElementById('lineageTab');
+const treeTab = document.getElementById('treeTab');
+const viewTitle = document.getElementById('viewTitle');
+const viewDesc = document.getElementById('viewDesc');
+
+let currentView = 'lineage';
+
+function childSummary(text){
+  const raw = (text || '').trim();
+  if (!raw || raw === '未详' || raw === '—') return { count: '未详', names: raw || '未详' };
+  const parts = raw.split(/[、,，]/).map(s => s.trim()).filter(Boolean);
+  return { count: parts.length ? `${parts.length}个` : '未详', names: raw };
+}
+
+function syncViewTabs(){
+  lineageTab.classList.toggle('active', currentView === 'lineage');
+  treeTab.classList.toggle('active', currentView === 'tree');
+  viewTitle.textContent = currentView === 'lineage' ? '世系方式' : '树状图';
+  viewDesc.textContent = currentView === 'lineage'
+    ? '按世代浏览，每个人物都保留“辈分 / 姓名 / 子女 / 相属 / 记事”信息。'
+    : '按父子关系展开，参考示例网页的树状图浏览方式。';
+}
+
+function setView(view){
+  currentView = view;
+  syncViewTabs();
+  render(searchEl.value);
+}
 
 function showDetail(gen, title, person){
   const genIndex = generations.findIndex(g=>g.gen===gen)+1;
+  const meta = personMeta[person.name] || {};
+  const note = meta.note || person.note;
+  const relation = meta.relation || '未详';
+  const children = childSummary(meta.childrenNames);
+  const zodiac = meta.zodiac || '未详';
+  const parent = meta.parent || '未详';
   detailEl.innerHTML = `
     <div class="eyebrow">${gen} · ${title}</div>
     <h3>${person.name}</h3>
-    <div class="sub">${person.note}</div>
-    <div class="kv"><div class="k">世代</div><div>${gen}</div><div class="k">标题</div><div>${title}</div><div class="k">状态</div><div>可点击查看</div></div>
-    <div class="quote">${person.note}</div>`;
+    <div class="sub">${note}</div>
+    <div class="kv"><div class="k">辈分</div><div>${gen}</div><div class="k">姓名</div><div>${person.name}</div><div class="k">所生子女</div><div>${children.count}</div><div class="k">子女名字</div><div>${children.names}</div><div class="k">相属</div><div>${zodiac}</div><div class="k">父辈</div><div>${parent}</div><div class="k">记事</div><div>${note}</div></div>
+    <div class="record"><div class="label">人物记事</div><div class="text">${note}</div></div>`;
   mgen.textContent = `${gen} · ${title}`;
   mname.textContent = person.name;
   mdesc.textContent = `第 ${genIndex} 世的人物节点。点击外部空白或关闭按钮可返回。`;
-  mchips.innerHTML = `<span class="chip">${gen}</span><span class="chip">${title}</span><span class="chip">可点击人物</span>`;
-  mnote.textContent = person.note;
+  mchips.innerHTML = `<span class="chip">${gen}</span><span class="chip">${relation}</span><span class="chip">${zodiac}</span>`;
+  mnote.textContent = note;
   modal.classList.add('open');
 }
 
-function render(filter=''){
+const supplements = [
+  {tag:'栏目 1', title:'旧谱序缺失说明', text:'网页不直接呈现旧谱序原文，把“旧谱序缺失”作为单独说明处理，避免和正文混在一起。'},
+  {tag:'栏目 2', title:'PDF 第 8-9 页补录', text:'第 8-9 页涉及的补充内容单独收纳，便于对照原 PDF 继续校读。'},
+  {tag:'栏目 3', title:'李姓的溯源', text:'把李姓源流相关文字独立成栏，作为谱前说明的一部分。'},
+  {tag:'栏目 4', title:'李姓的辉煌', text:'将李姓历史荣光、族望叙述与谱前导读分开呈现。'},
+  {tag:'栏目 5', title:'近代李氏族人中的英贤', text:'近代李氏人物的表述单独整理，方便后续接入人物详情。'},
+  {tag:'栏目 6', title:'李氏家训（2019 年 5 月）', text:'家训内容以独立栏目展示，保留时间标记，便于和正文区分。'},
+  {tag:'栏目 7', title:'前言', text:'前言放入独立栏，作为整页导读的起点。'},
+  {tag:'栏目 8', title:'“累世阀阅数代覃恩”说明', text:'对“累世阀阅数代覃恩”这一语汇单独作注，解释其在谱中的含义与出处。'}
+];
+
+function renderLineage(filter=''){
   const f = filter.trim().toLowerCase();
+  suppEl.innerHTML = supplements.map(s => `<div class="supp-card"><div class="tag">${s.tag}</div><h4>${s.title}</h4><p>${s.text}</p></div>`).join('');
+  const renderPersonCard = (name, gen, title) => {
+    const meta = personMeta[name] || {};
+    const person = peopleIndex.get(name) || { name, note: meta.note || '表格见原页' };
+    const note = meta.note || person.note || '表格见原页';
+    const children = childSummary(meta.childrenNames);
+    return `<div class="lineage-card">
+      <h3>${name}</h3>
+      <div class="line">${note}</div>
+      <div class="minirow"><div class="k">辈分</div><div>${gen}</div><div class="k">所生子女</div><div>${children.count}</div><div class="k">子女名字</div><div>${children.names}</div><div class="k">相属</div><div>${meta.zodiac || '未详'}</div><div class="k">记事</div><div>${note}</div></div>
+      <div style="margin-top:10px"><span class="person" data-gen="${gen}" data-title="${title}" data-name="${name}" data-note="${encodeURIComponent(note)}">查看详情<span class="sub">点击右侧</span></span></div>
+    </div>`;
+  };
+
   treeEl.innerHTML = generations.filter(g => {
-    const hay = [g.gen, g.title, ...g.people.map(p=>p.name+' '+p.note)].join(' ').toLowerCase();
+    const hay = [g.gen, g.title, ...g.people.map(p=>p.name+' '+p.note), ...g.people.flatMap(p => childMap[p.name] || [])].join(' ').toLowerCase();
+    return !f || hay.includes(f);
+  }).map(g => `
+    <div class="gen">
+      <div class="gen-card">
+        <div class="gen-head">
+          <div class="gen-title"><strong>${g.gen} · ${g.title}</strong><small>${g.people.length} 个人物</small></div>
+          <div class="muted small">按世代浏览</div>
+        </div>
+        <div class="gen-body">
+          <div class="lineage-grid">${g.people.map(p => renderPersonCard(p.name, g.gen, g.title)).join('')}</div>
+        </div>
+      </div>
+    </div>`).join('') || '<div class="muted">没有匹配结果。</div>';
+}
+
+function renderTree(filter=''){
+  const f = filter.trim().toLowerCase();
+  const renderNode = (name, gen, title) => {
+    const meta = personMeta[name] || {};
+    const person = peopleIndex.get(name) || { name, note: meta.note || '表格见原页' };
+    const note = meta.note || person.note || '表格见原页';
+    const children = childSummary(meta.childrenNames);
+    const childNames = childMap[name] || [];
+    const childHtml = childNames.length ? `<div class="branch-children">${childNames.map(ch => {
+      const childMeta = personMeta[ch] || {};
+      return `<span class="person" data-gen="${childMeta.gen || ''}" data-title="${childMeta.gen || ''}" data-name="${ch}" data-note="${encodeURIComponent(childMeta.note || '表格见原页')}">${ch}<span class="sub">${childMeta.gen || '子辈'}</span></span>`;
+    }).join('')}</div>` : '';
+    return `<div class="person-block">
+      <span class="person" data-gen="${gen}" data-title="${title}" data-name="${name}" data-note="${encodeURIComponent(note)}">${name}<span class="sub">${gen}</span></span>
+      <div class="person-meta">所生子女：${children.count}｜子女名字：${children.names}｜相属：${meta.zodiac || '未详'}｜父辈：${meta.parent || '未详'}</div>
+      ${childHtml}
+    </div>`;
+  };
+
+  treeEl.innerHTML = generations.filter(g => {
+    const hay = [g.gen, g.title, ...g.people.map(p=>p.name+' '+p.note), ...g.people.flatMap(p => childMap[p.name] || [])].join(' ').toLowerCase();
     return !f || hay.includes(f);
   }).map(g => `
     <div class="gen">
       <div class="gen-card">
         <div class="gen-head">
           <div class="gen-title"><strong>${g.gen} · ${g.title}</strong><small>${g.people.length} 个可点节点</small></div>
-          <div class="muted small">竖向展开</div>
+          <div class="muted small">父子关系已连线</div>
         </div>
         <div class="gen-body">
-          <div class="chips">${g.people.map(p => `<span class="person" data-gen="${g.gen}" data-title="${g.title}" data-name="${p.name}" data-note="${encodeURIComponent(p.note)}">${p.name}<span class="sub">${g.gen}</span></span>`).join('')}</div>
+          <div class="chips">${g.people.map(p => renderNode(p.name, g.gen, g.title)).join('')}</div>
         </div>
       </div>
     </div>`).join('') || '<div class="muted">没有匹配结果。</div>';
+}
+
+function render(filter=''){
+  if (currentView === 'lineage') {
+    renderLineage(filter);
+  } else {
+    renderTree(filter);
+  }
 
   storiesEl.innerHTML = stories.map(s => `<div class="story"><div class="tag">${s.tag}</div><h4>${s.title}</h4><p>${s.text}</p></div>`).join('');
   const pop = [['1877',4],['1949',42],['2019',135]];
@@ -199,7 +355,10 @@ function render(filter=''){
 }
 
 render();
+syncViewTabs();
 searchEl.addEventListener('input', e => render(e.target.value));
+lineageTab.addEventListener('click', () => setView('lineage'));
+treeTab.addEventListener('click', () => setView('tree'));
 
 treeEl.addEventListener('click', e => {
   const p = e.target.closest('.person');
