@@ -36,6 +36,7 @@
     .gen-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.gen-title{display:flex;flex-direction:column;gap:2px}.gen-title strong{font-size:16px}.gen-title small{color:var(--muted);font-size:12px}
     .gen-body{padding:0}.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px}.person{padding:9px 10px;border-radius:12px;background:#f2eadf;border:1px solid #eadfce;font-size:13px;cursor:pointer;transition:.15s transform,.15s background;line-height:1.35}.person:hover{transform:translateY(-1px);background:#efe0cc}
     .person .sub{display:block;font-size:11px;color:var(--muted);margin-top:3px}.person-block{display:grid;gap:8px}.person-meta{font-size:12px;line-height:1.6;color:var(--muted);padding-left:2px}.branch-children{display:grid;gap:8px;margin-left:14px;padding-left:14px;border-left:2px solid #e5d7c5}.branch-children .person{font-size:12px;padding:8px 9px;background:#fbf3e7}
+    .tree-card{border:1px solid #dbe6f6;background:#fff;border-radius:14px;padding:12px 14px;box-shadow:0 6px 18px rgba(46,78,120,.06)}.tree-row{display:flex;gap:8px;align-items:flex-start}.tree-toggle{border:0;background:#eef5ff;color:#3b6ea8;border-radius:999px;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;flex:0 0 auto;margin-top:2px}.tree-node{margin:0 0 10px 0}.tree-children{margin-left:28px;padding-left:16px;border-left:2px solid #dbe6f6;display:grid;gap:10px}.tree-top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.tree-name{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.tree-badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef5ff;color:#3b6ea8;font-size:12px;font-weight:700}.person-link{border:0;background:transparent;padding:0;font:inherit;font-weight:700;color:#1f1b16;cursor:pointer}.person-link:hover{color:#3b6ea8;text-decoration:underline}.tree-gen{font-size:12px;color:var(--muted)}.tree-info,.tree-note{font-size:13px;line-height:1.7;color:#4f453a;margin-top:4px}.tree-note{background:#f8fbff;border:1px solid #eef4fb;border-radius:10px;padding:8px 10px}
     .lineage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lineage-card{padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9;box-shadow:0 6px 18px rgba(78,58,34,.06)}.lineage-card h3{margin:0 0 6px;font-size:18px}.lineage-card .line{font-size:13px;line-height:1.7;color:#4f453a}.lineage-card .minirow{display:grid;grid-template-columns:72px 1fr;gap:6px 10px;margin-top:10px;font-size:13px}.lineage-card .k{color:var(--muted)}
     .search{display:flex;gap:10px;align-items:center;margin-bottom:14px}.search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;outline:none;font-size:15px}
     .detail{position:sticky;top:14px;padding:18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fffdf9,#fff7ed)}
@@ -187,6 +188,39 @@ const childMap = {
   '李天峰': ['世懋']
 };
 
+const treeChildren = {
+  '李十九': ['李三汉'],
+  '李三汉': ['李德方'],
+  '李德方': ['李文忠'],
+  '李文忠': ['李铭五'],
+  '李铭五': ['李英三'],
+  '李英三': ['李稳佐'],
+  '李稳佐': ['李致收'],
+  '李致收': ['李绪银'],
+  '李绪银': ['李国俊'],
+  '李国俊': ['李国佺'],
+  '李国佺': ['李调鼎'],
+  '李调鼎': ['李昭宗'],
+  '李昭宗': ['李文学'],
+  '李文学': ['李约'],
+  '李约': ['李如棫'],
+  '李如棫': ['李焕瑄'],
+  '李焕瑄': ['李清宝'],
+  '李清宝': ['李秀岩'],
+  '李秀岩': ['李望月'],
+  '李望月': ['李秉舒'],
+  '李秉舒': ['李文华'],
+  '李文华': ['李朝朝'],
+  ...childMap
+};
+
+const treeParent = {};
+Object.entries(treeChildren).forEach(([parent, children]) => {
+  children.forEach(child => {
+    if (!treeParent[child]) treeParent[child] = parent;
+  });
+});
+
 const peopleIndex = new Map();
 generations.forEach(g => g.people.forEach(p => peopleIndex.set(p.name, { ...p, gen: g.gen, title: g.title })));
 
@@ -216,12 +250,22 @@ const viewTitle = document.getElementById('viewTitle');
 const viewDesc = document.getElementById('viewDesc');
 
 let currentView = 'lineage';
+const collapsedNodes = new Set();
 
 function childSummary(text){
   const raw = (text || '').trim();
   if (!raw || raw === '未详' || raw === '—') return { count: '未详', names: raw || '未详' };
   const parts = raw.split(/[、,，]/).map(s => s.trim()).filter(Boolean);
   return { count: parts.length ? `${parts.length}个` : '未详', names: raw };
+}
+
+function isTreeCollapsed(name){
+  return collapsedNodes.has(name);
+}
+
+function toggleTreeNode(name){
+  if (collapsedNodes.has(name)) collapsedNodes.delete(name);
+  else collapsedNodes.add(name);
 }
 
 function syncViewTabs(){
@@ -284,7 +328,7 @@ function renderLineage(filter=''){
       <h3>${name}</h3>
       <div class="line">${note}</div>
       <div class="minirow"><div class="k">辈分</div><div>${gen}</div><div class="k">所生子女</div><div>${children.count}</div><div class="k">子女名字</div><div>${children.names}</div><div class="k">相属</div><div>${meta.zodiac || '未详'}</div><div class="k">记事</div><div>${note}</div></div>
-      <div style="margin-top:10px"><span class="person" data-gen="${gen}" data-title="${title}" data-name="${name}" data-note="${encodeURIComponent(note)}">查看详情<span class="sub">点击右侧</span></span></div>
+      <div style="margin-top:10px"><button type="button" class="person-link" data-gen="${gen}" data-title="${title}" data-name="${name}" data-note="${encodeURIComponent(note)}">查看详情</button></div>
     </div>`;
   };
 
@@ -307,38 +351,40 @@ function renderLineage(filter=''){
 
 function renderTree(filter=''){
   const f = filter.trim().toLowerCase();
-  const renderNode = (name, gen, title) => {
+  const matchesTree = (name) => {
+    const meta = personMeta[name] || {};
+    const person = peopleIndex.get(name) || { name, note: meta.note || '表格见原页' };
+    const hay = [name, meta.note || person.note || '', meta.childrenNames || '', meta.zodiac || '', (treeChildren[name] || []).join(' ')].join(' ').toLowerCase();
+    return !f || hay.includes(f) || (treeChildren[name] || []).some(matchesTree);
+  };
+
+  const renderNode = (name, level=0) => {
     const meta = personMeta[name] || {};
     const person = peopleIndex.get(name) || { name, note: meta.note || '表格见原页' };
     const note = meta.note || person.note || '表格见原页';
     const children = childSummary(meta.childrenNames);
-    const childNames = childMap[name] || [];
-    const childHtml = childNames.length ? `<div class="branch-children">${childNames.map(ch => {
-      const childMeta = personMeta[ch] || {};
-      return `<span class="person" data-gen="${childMeta.gen || ''}" data-title="${childMeta.gen || ''}" data-name="${ch}" data-note="${encodeURIComponent(childMeta.note || '表格见原页')}">${ch}<span class="sub">${childMeta.gen || '子辈'}</span></span>`;
-    }).join('')}</div>` : '';
-    return `<div class="person-block">
-      <span class="person" data-gen="${gen}" data-title="${title}" data-name="${name}" data-note="${encodeURIComponent(note)}">${name}<span class="sub">${gen}</span></span>
-      <div class="person-meta">所生子女：${children.count}｜子女名字：${children.names}｜相属：${meta.zodiac || '未详'}｜父辈：${meta.parent || '未详'}</div>
+    const childNames = treeChildren[name] || [];
+    const expanded = !isTreeCollapsed(name);
+    const childHtml = childNames.length && expanded ? `<div class="tree-children">${childNames.map(ch => renderNode(ch, level + 1)).join('')}</div>` : '';
+    const hasChildren = childNames.length > 0;
+    return `<div class="tree-node" data-tree-node="${name}" style="margin-left:${level ? 10 : 0}px">
+      <div class="tree-row">
+        <button class="tree-toggle" type="button" data-tree-toggle="${name}">${hasChildren ? (expanded ? '▾' : '▸') : '•'}</button>
+        <div class="tree-card">
+          <div class="tree-top">
+            <div class="tree-name"><span class="tree-badge">${meta.gen || '未详'}</span><button class="person-link" data-gen="${meta.gen || ''}" data-title="${meta.gen || ''}" data-name="${name}" data-note="${encodeURIComponent(note)}">${name}</button></div>
+            <div class="tree-gen">父辈：${treeParent[name] || meta.parent || '未详'}</div>
+          </div>
+          <div class="tree-info">所生子女：${children.count}｜子女名字：${children.names}｜相属：${meta.zodiac || '未详'}</div>
+          <div class="tree-note">${note}</div>
+        </div>
+      </div>
       ${childHtml}
     </div>`;
   };
 
-  treeEl.innerHTML = generations.filter(g => {
-    const hay = [g.gen, g.title, ...g.people.map(p=>p.name+' '+p.note), ...g.people.flatMap(p => childMap[p.name] || [])].join(' ').toLowerCase();
-    return !f || hay.includes(f);
-  }).map(g => `
-    <div class="gen">
-      <div class="gen-card">
-        <div class="gen-head">
-          <div class="gen-title"><strong>${g.gen} · ${g.title}</strong><small>${g.people.length} 个可点节点</small></div>
-          <div class="muted small">父子关系已连线</div>
-        </div>
-        <div class="gen-body">
-          <div class="chips">${g.people.map(p => renderNode(p.name, g.gen, g.title)).join('')}</div>
-        </div>
-      </div>
-    </div>`).join('') || '<div class="muted">没有匹配结果。</div>';
+  const roots = generations.flatMap(g => g.people.map(p => p.name)).filter(name => !treeParent[name]);
+  treeEl.innerHTML = roots.filter(matchesTree).map(name => renderNode(name, 0)).join('') || '<div class="muted">没有匹配结果。</div>';
 }
 
 function render(filter=''){
@@ -361,7 +407,14 @@ lineageTab.addEventListener('click', () => setView('lineage'));
 treeTab.addEventListener('click', () => setView('tree'));
 
 treeEl.addEventListener('click', e => {
-  const p = e.target.closest('.person');
+  const t = e.target.closest('[data-tree-toggle]');
+  if (t) {
+    e.stopPropagation();
+    toggleTreeNode(t.dataset.treeToggle);
+    render(searchEl.value);
+    return;
+  }
+  const p = e.target.closest('.person-link');
   if (!p) return;
   showDetail(p.dataset.gen, p.dataset.title, {name:p.dataset.name, note:decodeURIComponent(p.dataset.note)});
 });
