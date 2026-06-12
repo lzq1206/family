@@ -3,462 +3,228 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>李氏家谱｜竖幅世系树</title>
-  <meta name="description" content="李氏家谱网页：竖幅世系树、人物详情、故事整理与统计概览。" />
+  <title>Rainy Whisper｜网页集合站</title>
+  <meta name="description" content="Rainy Whisper 个人网页集合站：集中展示多个 GitHub Pages 项目，并自动附带简介与截图。" />
   <style>
-    :root{--bg:#f6f1e8;--card:#fffaf2;--ink:#1f1b16;--muted:#6f6559;--line:#dfd3c0;--accent:#8b5a2b;--accent2:#395c4a;--shadow:0 12px 30px rgba(78,58,34,.10);--radius:20px}
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;font-family:ui-serif,Georgia,"Times New Roman","Noto Serif SC",serif;background:linear-gradient(180deg,#fbf8f2 0%,var(--bg) 100%);color:var(--ink)}
+    :root{
+      --bg0:#07111f;
+      --bg1:#0b1730;
+      --bg2:#111f3d;
+      --card:#0d172bcc;
+      --card2:#13213ecc;
+      --line:rgba(255,255,255,.08);
+      --text:#eef4ff;
+      --muted:#aebbd7;
+      --soft:#d5def4;
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --accent3:#34d399;
+      --shadow:0 28px 70px rgba(0,0,0,.35);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(125,211,252,.18), transparent 60%),
+        radial-gradient(900px 680px at 85% 15%, rgba(167,139,250,.14), transparent 55%),
+        radial-gradient(900px 680px at 50% 95%, rgba(52,211,153,.08), transparent 50%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 35%, var(--bg2));
+      min-height:100vh;
+    }
     a{color:inherit;text-decoration:none}
-    .wrap{max-width:1320px;margin:0 auto;padding:26px 16px 64px}
-    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:stretch}
-    .panel,.card{background:rgba(255,250,242,.94);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .hero-main{padding:30px}
-    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:7px 12px;border-radius:999px;background:#efe3d2;color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.04em}
-    h1{margin:14px 0 10px;font-size:clamp(32px,4.8vw,56px);line-height:1.05}
-    .lead{font-size:18px;line-height:1.9;color:var(--muted);max-width:62ch;margin:0 0 18px}
-    .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-    .chip{padding:8px 12px;border-radius:999px;background:#f2eadf;border:1px solid #eadfce;color:#5f5345;font-size:13px}
-    .hero-side{padding:18px;display:grid;gap:14px}
-    .stat{padding:18px;border-radius:18px;background:linear-gradient(180deg,#fffdf8,#f7efe2);border:1px solid #e7dcc8}
-    .stat .label{font-size:13px;color:var(--muted);margin-bottom:6px}.stat .value{font-size:30px;font-weight:800;color:var(--accent)}.stat .desc{font-size:13px;color:var(--muted);line-height:1.6}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:18px}
-    .card{padding:20px}
-    .span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-4{grid-column:span 4}.span-7{grid-column:span 7}.span-5{grid-column:span 5}
-    .section-title{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:14px}.section-title h2{margin:0;font-size:24px}.section-title p{margin:0;color:var(--muted);font-size:13px}
-    .stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.mini{padding:14px;border:1px solid #eadfce;border-radius:16px;background:#fffdf9}.mini b{display:block;font-size:22px;color:var(--accent)}.mini span{font-size:12px;color:var(--muted)}
-    .view-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:14px;flex-wrap:wrap}.view-tabs{display:inline-flex;padding:4px;border:1px solid #e6d7c5;border-radius:999px;background:#fffaf2;box-shadow:0 6px 18px rgba(78,58,34,.06)}.view-tab{border:0;background:transparent;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:700;color:#6f6559;cursor:pointer}.view-tab.active{background:linear-gradient(180deg,#8b5a2b,#a86f3d);color:#fff;box-shadow:0 8px 18px rgba(139,90,43,.22)}.view-note{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
-    .layout{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}
-    .tree{position:relative;padding-left:26px}.tree::before{content:'';position:absolute;left:12px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--line),transparent)}
-    .gen{position:relative;margin:0 0 16px 0;padding:0 0 0 18px}.gen::before{content:'';position:absolute;left:4px;top:24px;width:18px;height:2px;background:var(--line)}
-    .gen-card{padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9;box-shadow:0 6px 18px rgba(78,58,34,.06)}
-    .gen-card:hover{border-color:#ceb996}
-    .gen-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.gen-title{display:flex;flex-direction:column;gap:2px}.gen-title strong{font-size:16px}.gen-title small{color:var(--muted);font-size:12px}
-    .gen-body{padding:0}.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px}.person{padding:9px 10px;border-radius:12px;background:#f2eadf;border:1px solid #eadfce;font-size:13px;cursor:pointer;transition:.15s transform,.15s background;line-height:1.35}.person:hover{transform:translateY(-1px);background:#efe0cc}
-    .person .sub{display:block;font-size:11px;color:var(--muted);margin-top:3px}.person-block{display:grid;gap:8px}.person-meta{font-size:12px;line-height:1.6;color:var(--muted);padding-left:2px}.branch-children{display:grid;gap:8px;margin-left:14px;padding-left:14px;border-left:2px solid #e5d7c5}.branch-children .person{font-size:12px;padding:8px 9px;background:#fbf3e7}
-    .tree-card{border:1px solid #dbe6f6;background:#fff;border-radius:14px;padding:12px 14px;box-shadow:0 6px 18px rgba(46,78,120,.06)}.tree-row{display:flex;gap:8px;align-items:flex-start}.tree-toggle{border:0;background:#eef5ff;color:#3b6ea8;border-radius:999px;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;flex:0 0 auto;margin-top:2px}.tree-node{margin:0 0 10px 0}.tree-children{margin-left:28px;padding-left:16px;border-left:2px solid #dbe6f6;display:grid;gap:10px}.tree-top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.tree-name{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.tree-badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef5ff;color:#3b6ea8;font-size:12px;font-weight:700}.person-link{border:0;background:transparent;padding:0;font:inherit;font-weight:700;color:#1f1b16;cursor:pointer}.person-link:hover{color:#3b6ea8;text-decoration:underline}.tree-gen{font-size:12px;color:var(--muted)}.tree-info,.tree-note{font-size:13px;line-height:1.7;color:#4f453a;margin-top:4px}.tree-note{background:#f8fbff;border:1px solid #eef4fb;border-radius:10px;padding:8px 10px}
-    .lineage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lineage-card{padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9;box-shadow:0 6px 18px rgba(78,58,34,.06)}.lineage-card h3{margin:0 0 6px;font-size:18px}.lineage-card .line{font-size:13px;line-height:1.7;color:#4f453a}.lineage-card .minirow{display:grid;grid-template-columns:72px 1fr;gap:6px 10px;margin-top:10px;font-size:13px}.lineage-card .k{color:var(--muted)}
-    .search{display:flex;gap:10px;align-items:center;margin-bottom:14px}.search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;outline:none;font-size:15px}
-    .detail{position:sticky;top:14px;padding:18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fffdf9,#fff7ed)}
-    .detail h3{margin:4px 0 8px;font-size:26px}.detail .muted{color:var(--muted);line-height:1.8}.detail .kv{display:grid;grid-template-columns:72px 1fr;gap:8px 10px;margin-top:14px;font-size:14px}.detail .k{color:var(--muted)}.quote{margin-top:14px;padding:14px;border-left:4px solid #d8c4a5;background:#f8f2e8;border-radius:12px;color:#51483d;line-height:1.85}
-    .story-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.story{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9}.story h4{margin:0 0 8px;font-size:18px}.story p{margin:0;color:#4f453a;line-height:1.85;font-size:14px}.story .tag{display:inline-block;padding:4px 8px;margin-bottom:8px;border-radius:999px;background:#efe3d2;color:var(--accent);font-size:12px;font-weight:700}
-    .supp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.supp-card{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fffdf9}.supp-card h4{margin:0 0 8px;font-size:18px}.supp-card p{margin:0;color:#4f453a;line-height:1.8;font-size:14px}.supp-card .tag{display:inline-block;padding:4px 8px;margin-bottom:8px;border-radius:999px;background:#eef5ef;color:var(--accent2);font-size:12px;font-weight:700}
-    .bar-row{display:grid;grid-template-columns:88px 1fr 44px;gap:10px;align-items:center;margin:10px 0}.bar-track{height:12px;border-radius:999px;background:#efe6d7;border:1px solid #eadfcf;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),#c28a4c)}.bar-label{font-size:14px;color:#473d32}.bar-value{text-align:right;font-weight:700;color:var(--accent)}
-    .muted{color:var(--muted)} .footer{margin-top:18px;font-size:12px;color:var(--muted);line-height:1.7}
-    .record{margin-top:14px;padding:14px;border-radius:14px;background:#f7efe2;border:1px solid #eadfcf}.record .label{font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:.06em;margin-bottom:6px}.record .text{line-height:1.85;color:#4f453a}
-    .modal{position:fixed;inset:0;background:rgba(31,27,22,.48);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.modal-box{max-width:680px;width:100%;background:#fffdf9;border-radius:22px;border:1px solid #e8dcc8;box-shadow:0 30px 80px rgba(0,0,0,.2);padding:18px}.modal-top{display:flex;justify-content:space-between;gap:12px;align-items:start}.close{border:0;background:#efe3d2;color:#6f4b24;border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:700}.modal h3{margin:0 0 6px;font-size:28px}.modal .sub{color:var(--muted);line-height:1.7}.modal .list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.small{font-size:13px}
-    @media (max-width: 980px){.hero,.layout,.story-grid,.stats-grid,.lineage-grid{grid-template-columns:1fr}.span-8,.span-4,.span-7,.span-5,.span-12{grid-column:span 12}.detail{position:static}}
+    .wrap{max-width:1480px;margin:0 auto;padding:28px 18px 56px}
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:32px;
+      background:linear-gradient(180deg, rgba(15,23,42,.92), rgba(8,15,30,.92));
+      box-shadow:var(--shadow);
+      padding:28px;
+    }
+    .hero::before,
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto;
+      border-radius:999px;
+      filter:blur(40px);
+      opacity:.7;
+      pointer-events:none;
+    }
+    .hero::before{width:240px;height:240px;left:-60px;top:-70px;background:rgba(125,211,252,.18)}
+    .hero::after{width:280px;height:280px;right:-100px;top:-80px;background:rgba(167,139,250,.16)}
+    .hero-grid{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:stretch;z-index:1}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);border-radius:999px;color:#dce7ff;font-size:13px;font-weight:700;letter-spacing:.04em}
+    h1{margin:14px 0 10px;font-size:clamp(32px,5vw,62px);line-height:1.02;letter-spacing:-.03em}
+    .lead{margin:0;max-width:66ch;color:var(--soft);font-size:16px;line-height:1.85}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--text);font-weight:700;font-size:14px;transition:transform .15s ease, background .15s ease, border-color .15s ease}
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
+    .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .stat{padding:16px;border-radius:20px;background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08)}
+    .stat .k{font-size:12px;color:var(--muted);margin-bottom:6px}.stat .v{font-size:28px;font-weight:800}.stat .d{font-size:12px;color:var(--muted);line-height:1.6;margin-top:6px}
+    .toolbar{margin-top:18px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+    .search{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;border:1px solid var(--line);background:rgba(7,17,31,.75);backdrop-filter:blur(12px)}
+    .search input{width:100%;border:0;outline:none;background:transparent;color:var(--text);font-size:15px}
+    .search input::placeholder{color:#8091bb}
+    .filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+    .chip{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--soft);padding:9px 12px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s ease;white-space:nowrap}
+    .chip.active{background:linear-gradient(135deg, rgba(125,211,252,.24), rgba(167,139,250,.22));border-color:rgba(125,211,252,.35);color:#fff;box-shadow:0 10px 26px rgba(125,211,252,.12)}
+    .section{margin-top:18px;padding:18px;border-radius:28px;border:1px solid var(--line);background:rgba(9,16,31,.66);backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+    .section-head{display:flex;justify-content:space-between;gap:14px;align-items:end;flex-wrap:wrap;margin-bottom:14px}
+    .section-head h2{margin:0;font-size:22px}.section-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+    .grid{display:grid;grid-template-columns:repeat( auto-fit, minmax(280px, 1fr));gap:16px}
+    .card{overflow:hidden;border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg, rgba(19,33,62,.92), rgba(12,20,37,.96));box-shadow:0 18px 42px rgba(0,0,0,.28);display:flex;flex-direction:column;min-height:100%}
+    .shot{position:relative;aspect-ratio:16/10;background:#09111d;overflow:hidden}
+    .shot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+    .card:hover .shot img{transform:scale(1.02)}
+    .shot::after{content:"";position:absolute;inset:auto 0 0 0;height:80px;background:linear-gradient(180deg, transparent, rgba(9,17,29,.9))}
+    .badge-row{position:absolute;left:14px;right:14px;top:14px;display:flex;justify-content:space-between;gap:8px;align-items:start;z-index:2}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.02em;background:rgba(7,17,31,.78);border:1px solid rgba(255,255,255,.1);color:#eff6ff;backdrop-filter:blur(10px)}
+    .badge strong{font-weight:800}
+    .content{padding:16px 16px 18px;display:grid;gap:10px}
+    .title{display:flex;justify-content:space-between;gap:10px;align-items:start}.title h3{margin:0;font-size:18px;line-height:1.3}.title .mini{color:var(--muted);font-size:12px;white-space:nowrap}
+    .summary{margin:0;color:#d7e2fb;font-size:14px;line-height:1.75;min-height:3.5em}
+    .meta{display:flex;flex-wrap:wrap;gap:8px}.tag{padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#c7d6f5;font-size:12px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+    .ghost{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);font-size:13px;font-weight:800;flex:1 1 140px;text-align:center}
+    .ghost.primary{background:linear-gradient(135deg, rgba(125,211,252,.2), rgba(52,211,153,.14));border-color:rgba(125,211,252,.25)}
+    .ghost:hover{background:rgba(255,255,255,.08)}
+    .footer{margin-top:18px;color:var(--muted);font-size:12px;line-height:1.8}
+    .empty{padding:26px;border-radius:20px;border:1px dashed rgba(255,255,255,.16);color:var(--muted);text-align:center;background:rgba(255,255,255,.03)}
+    @media (max-width: 980px){.hero-grid,.toolbar{grid-template-columns:1fr}.filters{justify-content:flex-start}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width: 640px){.wrap{padding:14px}.hero{padding:18px;border-radius:24px}.section{padding:14px;border-radius:22px}.stats{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.toolbar{gap:10px}}
   </style>
 </head>
 <body>
-<div class="wrap">
-  <section class="hero">
-    <div class="panel hero-main">
-      <div class="eyebrow">李氏家谱｜竖幅世系树 + 人物详情 + 故事整理</div>
-      <h1>李氏家谱<br/>网页化展示</h1>
-      <p class="lead">已补入第 21、22 世，并继续延展到第 23、24 世的 OCR 可辨识信息；现在可在“世系方式 / 树状图”两个标签间切换。另把旧谱序缺失、PDF 第 8-9 页补录、李姓溯源与家训说明单独放入谱前栏目。</p>
-      <div class="meta">
-        <span class="chip">来源：/family/data/paper/李氏家族（全部内容）.pdf</span>
-        <span class="chip">形式：静态页面</span>
-        <span class="chip">可点人物详情</span>
-        <span class="chip">GitHub Pages</span>
-      </div>
-    </div>
-    <div class="panel hero-side">
-      <div class="stat"><div class="label">家族人口</div><div class="value">135</div><div class="desc">2019 年 7 月统计：男 69、女 66，共 135 人。</div></div>
-      <div class="stat"><div class="label">大专以上</div><div class="value">33</div><div class="desc">解放前 0；1950s—2000s 共 33 人。</div></div>
-      <div class="stat"><div class="label">当前展示</div><div class="value">24 世</div><div class="desc">补齐 21、22 世，并向后延展到 23、24 世。</div></div>
-    </div>
-  </section>
-
-  <section class="grid">
-    <div class="card span-12">
-      <div class="section-title"><div><h2>概览</h2><p>统计与页面说明</p></div></div>
-      <div class="stats-grid">
-        <div class="mini"><b>24</b><span>已整理世代</span></div>
-        <div class="mini"><b>4</b><span>故事文章</span></div>
-        <div class="mini"><b>135</b><span>2019 人口</span></div>
-        <div class="mini"><b>33</b><span>高等教育人数</span></div>
-      </div>
-    </div>
-
-    <div class="card span-12">
-      <div class="section-title"><div><h2>谱前补记与说明</h2><p>把旧谱序缺失、PDF 补页与说明性文字单独放在一个栏目</p></div></div>
-      <div class="supp-grid" id="supplements"></div>
-    </div>
-
-    <div class="card span-8">
-      <div class="view-head">
-        <div><h2 id="viewTitle">世系方式</h2><p id="viewDesc" class="view-note">按世代浏览，每个人物都保留“辈分 / 姓名 / 子女 / 相属 / 记事”信息。</p></div>
-        <div class="view-tabs" role="tablist" aria-label="家谱展示方式">
-          <button id="lineageTab" class="view-tab active" type="button">世系方式</button>
-          <button id="treeTab" class="view-tab" type="button">树状图</button>
-        </div>
-      </div>
-      <div class="search"><input id="search" placeholder="搜索世代 / 姓名 / 关键词" /></div>
-      <div class="tree" id="tree"></div>
-    </div>
-
-    <div class="card span-4">
-      <div class="section-title"><div><h2>人物详情</h2><p>点击世系树中的姓名</p></div></div>
-      <div class="detail" id="detail">
-        <div class="eyebrow">默认选中</div>
-        <h3>李十九</h3>
-        <div class="sub">始祖节点。点击其他人物后，这里会展示世代、可辨识姓名、原文备注与相关分支。</div>
-        <div class="kv"><div class="k">世代</div><div>第 1 世</div><div class="k">状态</div><div>可点击查看</div><div class="k">记事</div><div>OCR 可辨识为始祖，后续分支在后世展开。</div></div>
-        <div class="record"><div class="label">记事说明</div><div class="text">本页以“可浏览、可检索、可继续校对”为目标；早期几世仍保留 OCR 识别痕迹，后续可逐页补正。</div></div>
-      </div>
-    </div>
-
-    <div class="card span-12">
-      <div class="section-title"><div><h2>故事整理</h2><p>从谱中抽出的可读故事，整理成短文置于末尾</p></div></div>
-      <div class="story-grid" id="stories"></div>
-    </div>
-
-    <div class="card span-12">
-      <div class="section-title"><div><h2>家族人口变化</h2><p>谱中统计页摘要</p></div></div>
-      <div id="bars"></div>
-    </div>
-  </section>
-
-  <div class="footer">注：此版已补 21、22 世，并将人物点击详情、记事字段、谱前补记栏目、世系方式 / 树状图切换与故事整理放在同一页。若你要，我下一步可以继续把每一支细化成更像族谱软件的分枝图。🦞</div>
-</div>
-
-<div class="modal" id="modal"><div class="modal-box"><div class="modal-top"><div><div class="eyebrow" id="mgen">人物详情</div><h3 id="mname"></h3><div class="sub" id="mdesc"></div></div><button class="close" id="closeBtn">关闭</button></div><div class="list" id="mchips"></div><div class="quote" id="mnote"></div></div></div>
-
-<script>
-const generations = [
-  {gen:'第1世',title:'李十九',people:[{name:'李十九',note:'始祖。谱中可辨识为李氏开篇节点。'}]},
-  {gen:'第2世',title:'李三汉',people:[{name:'李三汉',note:'主名可辨识为李三汉。'}]},
-  {gen:'第3世',title:'李德方',people:[{name:'李德方',note:'主名可辨识为李德方。'}]},
-  {gen:'第4世',title:'李文忠',people:[{name:'李文忠',note:'可见铭、荣、亨等支系。'}, {name:'铭',note:'第4世可见名号。'}, {name:'荣',note:'第4世可见名号。'}, {name:'亨',note:'第4世可见名号。'}]},
-  {gen:'第5世',title:'李铭五',people:[{name:'李铭五',note:'可见成、积、效、和、英等分支。'}, {name:'成',note:'第5世分支。'}, {name:'积',note:'第5世分支。'}, {name:'效',note:'第5世分支。'}, {name:'和',note:'第5世分支。'}, {name:'英',note:'第5世分支。'}]},
-  {gen:'第6世',title:'李英三官仓',people:[{name:'李英三',note:'OCR 可见英三、官仓、稳等。'}, {name:'官仓',note:'第6世可辨识。'}, {name:'稳',note:'第6世可辨识。'}]},
-  {gen:'第7世',title:'李稳佐 / 李致收',people:[{name:'李稳佐',note:'分支中出现稳佐。'}, {name:'李致收',note:'分支中出现致收。'}, {name:'叢',note:'分支中出现叢。'}, {name:'华',note:'分支中出现华。'}]},
-  {gen:'第8世',title:'李致收 / 李叢华',people:[{name:'孟夏',note:'第8世可见。'}, {name:'边',note:'第8世可见。'}, {name:'昇',note:'第8世可见。'}, {name:'钏',note:'第8世可见。'}, {name:'钞',note:'第8世可见。'}, {name:'银',note:'第8世可见。'}, {name:'绪',note:'第8世可见。'}]},
-  {gen:'第9世',title:'李绪银 / 李秤',people:[{name:'李绪银',note:'重修关王庙时有捐银记载。'}, {name:'秤',note:'第9世分支。'}, {name:'壘',note:'第9世分支。'}, {name:'柏',note:'第9世分支。'}, {name:'稼',note:'第9世分支。'}, {name:'穑',note:'第9世分支。'}]},
-  {gen:'第10世',title:'李国俊 / 李命',people:[{name:'李国俊',note:'可见国字辈多支。'}, {name:'李命',note:'第10世节点。'}, {name:'国佺',note:'可辨识。'}, {name:'国随',note:'可辨识。'}, {name:'国僚',note:'可辨识。'}, {name:'国延',note:'可辨识。'}, {name:'国傑',note:'可辨识。'}]},
-  {gen:'第11世',title:'李国佺 / 李希美',people:[{name:'李希美',note:'第11世可见。'}, {name:'李国佺',note:'第11世可见。'}, {name:'李调鼎',note:'第11/12世过渡可见。'}, {name:'李壘',note:'第11世可见。'}]},
-  {gen:'第12世',title:'李调鼎 / 李齐膺',people:[{name:'李调鼎',note:'第12世节点。'}, {name:'李齐膺',note:'齐字辈可见。'}, {name:'李齐芳',note:'齐字辈可见。'}, {name:'李齐芬',note:'齐字辈可见。'}, {name:'李齐桌',note:'齐字辈可见。'}]},
-  {gen:'第13世',title:'李昭宗 / 李缵宗',people:[{name:'李昭宗',note:'宗字辈展开。'}, {name:'李缵宗',note:'宗字辈展开。'}, {name:'李嗣宗',note:'嗣宗支。'}, {name:'李扬宗',note:'扬宗支。'}, {name:'李明宗',note:'明宗支。'}]},
-  {gen:'第14世',title:'李文学 / 李行廷 / 李信善',people:[{name:'李文学',note:'可见文学支。'}, {name:'李行廷',note:'可见行廷支。'}, {name:'李信善',note:'可见信善支。'}, {name:'李信士',note:'可见信士支。'}]},
-  {gen:'第15世',title:'李约 / 李维 / 李纲 / 李经',people:[{name:'李约',note:'约字辈。'}, {name:'李维',note:'维字辈。'}, {name:'李纲',note:'纲字辈。'}, {name:'李经',note:'经字辈。'}, {name:'李缙',note:'缙字辈。'}, {name:'李绅',note:'绅字辈。'}, {name:'李绶',note:'绶字辈。'}, {name:'李綸',note:'綸字辈。'}, {name:'李纯',note:'纯字辈。'}, {name:'李綍',note:'綍字辈。'}]},
-  {gen:'第16世',title:'李如棫 / 李如楷 / 李如桐',people:[{name:'李如棫',note:'如字辈。'}, {name:'李如桥',note:'如字辈。'}, {name:'李如椿',note:'如字辈。'}, {name:'李如栎',note:'如字辈。'}, {name:'李如桂',note:'如字辈。'}, {name:'李如棠',note:'如字辈。'}, {name:'李如楫',note:'如字辈。'}, {name:'李如楠',note:'如字辈。'}, {name:'李如楷',note:'如字辈。'}, {name:'李如栋',note:'如字辈。'}, {name:'李如桐',note:'如字辈。'}, {name:'李如槐',note:'如字辈。'}]},
-  {gen:'第17世',title:'李焕瑄 / 李如楠支系',people:[{name:'李焕瑄',note:'焕字辈。'}, {name:'李焕施',note:'焕字辈。'}, {name:'李焕瑕',note:'焕字辈。'}, {name:'李焕璣',note:'焕字辈。'}, {name:'李焕珍',note:'焕字辈。'}, {name:'李焕璞',note:'焕字辈。'}, {name:'李焕瑷',note:'焕字辈。'}, {name:'李焕玿',note:'焕字辈。'}, {name:'李焕璸',note:'焕字辈。'}, {name:'李焕璋',note:'焕字辈。'}, {name:'李焕琇',note:'焕字辈。'}, {name:'李焕瑛',note:'焕字辈。'}, {name:'李焕琳',note:'焕字辈。'}, {name:'李焕瑢',note:'焕字辈。'}]},
-  {gen:'第18世',title:'李清宝 / 李秀岩 / 李秀峯',people:[{name:'李清宝',note:'清字辈。'}, {name:'李清瑞',note:'清字辈。'}, {name:'李清珸',note:'清字辈。'}, {name:'李清瑗',note:'清字辈。'}, {name:'李清璔',note:'清字辈。'}, {name:'李清和',note:'清字辈。'}, {name:'李秀岩',note:'秀字辈。'}, {name:'李秀峯',note:'秀字辈。'}, {name:'李秀成',note:'秀字辈。'}, {name:'李保金',note:'第18/19世可见。'}, {name:'李样',note:'第18世可见。'}, {name:'李振基',note:'基字辈过渡。'}, {name:'李承基',note:'基字辈过渡。'}]},
-  {gen:'第19世',title:'李秀岩 / 李秀成 / 李考',people:[{name:'李秀岩',note:'第19世仍可见。'}, {name:'李秀峯',note:'第19世仍可见。'}, {name:'李秀成',note:'第19世仍可见。'}, {name:'李保金',note:'第19世可见。'}, {name:'李文考',note:'文考支。'}, {name:'李武考',note:'武考支。'}, {name:'李应考',note:'应考支。'}, {name:'李忠考',note:'忠考支。'}]},
-  {gen:'第20世',title:'李文 / 李武 / 李应 / 李忠',people:[{name:'李文',note:'第20世。'}, {name:'李武',note:'第20世。'}, {name:'李应',note:'第20世。'}, {name:'李忠',note:'第20世。'}, {name:'月',note:'可见月字辈。'}, {name:'景',note:'可见景字辈。'}, {name:'润',note:'可见润字辈。'}, {name:'望',note:'可见望字辈。'}, {name:'能',note:'可见能字辈。'}, {name:'勤',note:'可见勤字辈。'}, {name:'亮',note:'可见亮字辈。'}]},
-  {gen:'第21世',title:'李望月 / 李景月 / 李润月',people:[{name:'李望月',note:'可见望月支。'}, {name:'李景月',note:'可见景月支。'}, {name:'李润月',note:'可见润月支。'}, {name:'李端正',note:'可见端正支。'}, {name:'李国栋',note:'可见国栋支。'}, {name:'李念正',note:'可见念正支。'}, {name:'李国强',note:'可见国强支。'}, {name:'李国梁',note:'可见国梁支。'}, {name:'李必成',note:'可见必成支。'}, {name:'李可昌',note:'可见可昌支。'}, {name:'李满贞',note:'可见满贞支。'}, {name:'李满囤',note:'可见满囤支。'}]},
-  {gen:'第22世',title:'李秉舒 / 李秉钲 / 李秉铁 / 李召麒',people:[{name:'李秉舒',note:'可见重生支。'}, {name:'李秉钲',note:'可见重生支。'}, {name:'李秉铁',note:'可见重生支。'}, {name:'李召麒',note:'应归入第 22 世，不应混入第 21 世。'}, {name:'李卫平',note:'可见。'}, {name:'李孟珍',note:'可见。'}, {name:'李三贵',note:'可见。'}, {name:'李三俊',note:'可见。'}, {name:'李三旺',note:'可见。'}, {name:'李晋兴',note:'可见。'}]},
-  {gen:'第23世',title:'李文华 / 李亚军 / 李振民',people:[{name:'李文华',note:'第23世。'}, {name:'李亚军',note:'第23世。'}, {name:'李振民',note:'第23世。'}, {name:'李亚政',note:'谱后附有个人简介。'}, {name:'李亚正',note:'谱后附有个人简介。'}, {name:'李李华',note:'OCR 残片可见。'}, {name:'李龙',note:'支系简记。'}]},
-  {gen:'第24世',title:'李朝朝 / 李喜朝 / 李随朝后裔',people:[{name:'李朝朝',note:'应归入第 24 世。'}, {name:'李随朝',note:'第 24 世出现。'}, {name:'李喜朝',note:'第 24 世出现。'}, {name:'李娜',note:'可见于后续页面。'}, {name:'李欢娜',note:'可见于后续页面。'}, {name:'李浩森',note:'可见于后续页面。'}, {name:'李浩桦',note:'可见于后续页面。'}, {name:'李雪峰',note:'可见于后续页面。'}, {name:'李立峯',note:'可见于后续页面。'}, {name:'李占峯',note:'可见于后续页面。'}]}
-];
-
-const personMeta = {
-  '李念正': {gen:'第21世', relation:'父辈', childrenNames:'李召麒', zodiac:'未详', note:'21世节点。李召麒的记事已归入其下。'},
-  '李召麒': {gen:'第22世', relation:'子', parent:'李念正', childrenNames:'未详', zodiac:'猴', note:'生于一九九三年十月十三日。毕业于清华大学，二〇一二届，主攻汽车设计和制造、经济管理双学位。记事在第21世李念正下面。'},
-  '李世珍': {gen:'第22世', childrenNames:'未详', zodiac:'牛', note:'一九八五年三月十九日生，嫁郑家村郑占国。该页子女列与记事尚需逐格核对，先不硬写。'},
-  '李义珍': {gen:'第22世', childrenNames:'未详', zodiac:'猪', note:'一九八三年七月二十四日生，嫁太谷王振江。该页子女列与记事尚需逐格核对，先不硬写。'},
-  '李三贵': {gen:'第22世', childrenNames:'未详', zodiac:'猴', note:'“人民功臣”条目。生于一九三二年六月初五，卒于二〇〇九年十月初一。该条未见清晰子女列，先不写子女名。'},
-  '李三俊': {gen:'第22世', childrenNames:'未详', zodiac:'羊', note:'一九六三年四月八日生，嫁北礼教村焦明仓。该页子女列尚未核清。'},
-  '李三旺': {gen:'第22世', childrenNames:'未详', zodiac:'羊', note:'一九五九年十一月二十二日生，嫁蔡村李建峡。该页子女列尚未核清。'},
-  '李晋兴': {gen:'第22世', childrenNames:'振民、海红、海玲、海棠、海燕', zodiac:'猴', note:'一九六八年五月十七日生，从事医务和药业，妻刘瑞芳，一九六八年生。'},
-  '李军': {gen:'第22世', childrenNames:'潘星茹、毛豆', zodiac:'未详', note:'一九八四年七月十二日生，毕业于山西老区医学院，嫁到忻州庄磨镇太和村潘小宏，生二女：潘星茹、毛豆，夫妻太原工作。'},
-  '李会兰': {gen:'第22世', childrenNames:'王浩、王悦嘉', zodiac:'未详', note:'一九八〇年八月二十四日生，平顶山工学院毕业，丈夫王富增，定居云南大理南涧县小河底村；后又见昆明理工大学毕业，生一子王浩、一女王悦嘉。'},
-  '李五震': {gen:'第22世', childrenNames:'贾槿炘', zodiac:'羊', note:'一九九一年十一月十四日生，嫁原平市贾宏飞，生一女贾槿炘。'},
-  '李五一': {gen:'第22世', childrenNames:'未详', zodiac:'马', note:'一九七八年生，哈尔滨××大学，去加拿大留学，随母亲一同定居加拿大。该条暂无清晰子女列。'},
-  '李文华': {gen:'第23世', childrenNames:'舒蕾', zodiac:'蛇', note:'第23世条目。谱页可见子名舒蕾；其余信息尚需逐字校读。'},
-  '李文辉': {gen:'第23世', childrenNames:'佩奇', zodiac:'鼠', note:'第23世条目。谱页可见子名佩奇；其余信息尚需逐字校读。'},
-  '李亚辉': {gen:'第23世', childrenNames:'嘉佩', zodiac:'猴', note:'第23世条目。谱页可见子名嘉佩；其余信息尚需逐字校读。'},
-  '李昭辉': {gen:'第23世', childrenNames:'佳锦', zodiac:'狗', note:'第23世条目。谱页可见子名佳锦；其余信息尚需逐字校读。'},
-  '李亚军': {gen:'第23世', childrenNames:'浩森', zodiac:'鼠', note:'第23世条目。谱页可见子名浩森。'},
-  '李峰军': {gen:'第23世', childrenNames:'浩桦', zodiac:'马', note:'第23世条目。谱页可见子名浩桦。'},
-  '李海燕': {gen:'第23世', childrenNames:'未详', zodiac:'鸡', note:'第23世条目。毕业/生育信息有一部分可读，但子名列还未完全核清。'},
-  '李串狮': {gen:'第23世', childrenNames:'未详', zodiac:'猪', note:'第23世条目。毕业信息可读，但子名列还需再核。'},
-  '李联朝': {gen:'第24世', childrenNames:'未详', zodiac:'马', note:'第24世条目。页内有出生日期与学历，但子女列目前不够清晰，先不硬写。'},
-  '李朝朝': {gen:'第24世', childrenNames:'王紫静、王紫优', zodiac:'蛇', note:'第24世条目。嫁到临猗县卓里村王景伟，生有二女：王紫静、王紫优。'},
-  '李随朝': {gen:'第24世', childrenNames:'未详', zodiac:'牛', note:'第24世条目。页内见出生与学历信息，但子女列仍需再核。'},
-  '李喜朝': {gen:'第24世', childrenNames:'未详', zodiac:'狗', note:'第24世条目。页内见出生与学历信息，但子女列仍需再核。'},
-  '李必成': {childrenNames:'李朝春', zodiac:'狗', note:'一九三四年生，嫁南礼教村，随夫定居河南省平顶山，二〇〇二年十一月六日卒于河南平顶山，生一子李朝春。'},
-  '李可昌': {childrenNames:'巧珍、月珍、排珍、世珍、义珍、芳珍、孟珍', zodiac:'蛇、羊、虎、虎、牛、猪、狗、鼠、猪、猪、鸡', note:'谱页列出多名子女与相属；分别嫁北礼教村、蔡村、马村等。'},
-  '李满贞': {childrenNames:'养泽、样红、芳芳、小芳', zodiac:'虎、马、鸡、猴', note:'一九五一年生，卒于二〇一七年，嫁杜村刘新岗。'},
-  '李满囤': {childrenNames:'陈福有、有民、双民、正民', zodiac:'虎、猴、...', note:'一九三七年生，卒于二〇一六年，嫁许家湾陈谋。'},
-  '李哲峯': {childrenNames:'佳玺、琳烨', zodiac:'龙、鼠', note:'一九九五年三月二十二日生，高中毕业。'},
-  '李占峯': {childrenNames:'佳澎、捷康', zodiac:'龙、龙', note:'二〇〇八年三月二十六日生。'},
-  '李立峯': {childrenNames:'娃琳、森', zodiac:'鸡、猪', note:'一九九八年生。'},
-  '李争平': {childrenNames:'田田', zodiac:'鸡', note:'二〇〇〇年十月山西农业大学毕业。'},
-  '李卫平': {childrenNames:'博阳、天骄、一冉、毛毛', zodiac:'牛、虎、龙、虎', note:'一九九八年十月海南大学毕业。'},
-  '李佳星': {childrenNames:'静怡', zodiac:'狗', note:'二〇〇六年十一月初四。'},
-  '李天峰': {childrenNames:'世懋', zodiac:'龙', note:'二〇一二年腊月二十四生。'},
-  '李雪峰': {childrenNames:'—', zodiac:'未详', note:'表格见原页。'},
-  '李虎峰': {childrenNames:'霖、烨', zodiac:'牛', note:'表格见原页。'},
-  '李磊峰': {childrenNames:'—', zodiac:'未详', note:'表格见原页。'}
-};
-
-const childMap = {
-  '李念正': ['李召麒'],
-  '李召麒': [],
-  '李世珍': ['郑佩晖'],
-  '李义珍': ['王梓烨'],
-  '李三贵': [],
-  '李三俊': [],
-  '李三旺': [],
-  '李晋兴': ['振民', '海红', '海玲', '海棠', '海燕'],
-  '李军': ['潘星茹', '毛豆'],
-  '李会兰': ['王浩', '王悦嘉'],
-  '李五震': ['贾槿炘'],
-  '李文华': ['舒蕾'],
-  '李文辉': ['佩奇'],
-  '李亚辉': ['嘉佩'],
-  '李昭辉': ['佳锦'],
-  '李亚军': ['浩森'],
-  '李峰军': ['浩桦'],
-  '李朝朝': ['王紫静', '王紫优'],
-  '李必成': ['李朝春'],
-  '李满贞': ['养泽', '样红', '芳芳', '小芳'],
-  '李满囤': ['陈福有', '有民', '双民', '正民'],
-  '李哲峯': ['佳玺', '琳烨'],
-  '李占峯': ['佳澎', '捷康'],
-  '李立峯': ['娃琳', '森'],
-  '李争平': ['田田'],
-  '李卫平': ['博阳', '天骄', '一冉', '毛毛'],
-  '李佳星': ['静怡'],
-  '李天峰': ['世懋']
-};
-
-const treeChildren = {
-  '李十九': ['李三汉'],
-  '李三汉': ['李德方'],
-  '李德方': ['李文忠'],
-  '李文忠': ['李铭五'],
-  '李铭五': ['李英三'],
-  '李英三': ['李稳佐'],
-  '李稳佐': ['李致收'],
-  '李致收': ['李绪银'],
-  '李绪银': ['李国俊'],
-  '李国俊': ['李国佺'],
-  '李国佺': ['李调鼎'],
-  '李调鼎': ['李昭宗'],
-  '李昭宗': ['李文学'],
-  '李文学': ['李约'],
-  '李约': ['李如棫'],
-  '李如棫': ['李焕瑄'],
-  '李焕瑄': ['李清宝'],
-  '李清宝': ['李秀岩'],
-  '李秀岩': ['李望月'],
-  '李望月': ['李秉舒'],
-  '李秉舒': ['李文华'],
-  '李文华': ['李朝朝'],
-  ...childMap
-};
-
-const treeParent = {};
-Object.entries(treeChildren).forEach(([parent, children]) => {
-  children.forEach(child => {
-    if (!treeParent[child]) treeParent[child] = parent;
-  });
-});
-
-const peopleIndex = new Map();
-generations.forEach(g => g.people.forEach(p => peopleIndex.set(p.name, { ...p, gen: g.gen, title: g.title })));
-
-const stories = [
-  {tag:'故事 1',title:'李国俊焚谱：乱世护谱的家族记忆',text:'谱中写到李国俊在特殊年代曾为保全家谱与家族记忆，选择焚毁部分资料。这个故事不是为了歌颂“焚毁”，而是说明族谱在战乱、搬迁与政治风波中如何艰难保存，也提醒后人：谱牒既是记忆，也是风险。'},
-  {tag:'故事 2',title:'蔡村演戏与“崇祯王上梅山”',text:'谱里记到蔡村曾上演《崇祯王上梅山》，因戏中情节触动皇姑，后人遂有“不再演”的传说。这个故事展示了地方戏、口耳相传与家族禁忌如何交织，成为谱中的文化记忆。'},
-  {tag:'故事 3',title:'李秀岩行医：从自学到公益',text:'李秀岩以针灸、刮痧等医术为村民诊病，常年坚持上门帮扶，也推动了村里医疗卫生知识普及。谱中这类人物故事体现了“家谱不止记名字，也记德行与公共贡献”。'},
-  {tag:'故事 4',title:'李亚正：企业、技术与乡里公益',text:'李亚正的个人简介较长，记录了其在制药、技术研发和企业管理上的经历，也提到对村里公益、道路硬化等支持。它更像一篇人物传记，说明新谱已延伸到当代职业成就与社会贡献。'}
-];
-
-const treeEl = document.getElementById('tree');
-const detailEl = document.getElementById('detail');
-const storiesEl = document.getElementById('stories');
-const barsEl = document.getElementById('bars');
-const suppEl = document.getElementById('supplements');
-const searchEl = document.getElementById('search');
-const modal = document.getElementById('modal');
-const closeBtn = document.getElementById('closeBtn');
-const mgen = document.getElementById('mgen');
-const mname = document.getElementById('mname');
-const mdesc = document.getElementById('mdesc');
-const mchips = document.getElementById('mchips');
-const mnote = document.getElementById('mnote');
-const lineageTab = document.getElementById('lineageTab');
-const treeTab = document.getElementById('treeTab');
-const viewTitle = document.getElementById('viewTitle');
-const viewDesc = document.getElementById('viewDesc');
-
-let currentView = 'lineage';
-const collapsedNodes = new Set();
-
-function childSummary(text){
-  const raw = (text || '').trim();
-  if (!raw || raw === '未详' || raw === '—') return { count: '未详', names: raw || '未详' };
-  const parts = raw.split(/[、,，]/).map(s => s.trim()).filter(Boolean);
-  return { count: parts.length ? `${parts.length}个` : '未详', names: raw };
-}
-
-function isTreeCollapsed(name){
-  return collapsedNodes.has(name);
-}
-
-function toggleTreeNode(name){
-  if (collapsedNodes.has(name)) collapsedNodes.delete(name);
-  else collapsedNodes.add(name);
-}
-
-function syncViewTabs(){
-  lineageTab.classList.toggle('active', currentView === 'lineage');
-  treeTab.classList.toggle('active', currentView === 'tree');
-  viewTitle.textContent = currentView === 'lineage' ? '世系方式' : '树状图';
-  viewDesc.textContent = currentView === 'lineage'
-    ? '按世代浏览，每个人物都保留“辈分 / 姓名 / 子女 / 相属 / 记事”信息。'
-    : '按父子关系展开，参考示例网页的树状图浏览方式。';
-}
-
-function setView(view){
-  currentView = view;
-  syncViewTabs();
-  render(searchEl.value);
-}
-
-function showDetail(gen, title, person){
-  const genIndex = generations.findIndex(g=>g.gen===gen)+1;
-  const meta = personMeta[person.name] || {};
-  const note = meta.note || person.note;
-  const relation = meta.relation || '未详';
-  const children = childSummary(meta.childrenNames);
-  const zodiac = meta.zodiac || '未详';
-  const parent = meta.parent || '未详';
-  detailEl.innerHTML = `
-    <div class="eyebrow">${gen} · ${title}</div>
-    <h3>${person.name}</h3>
-    <div class="sub">${note}</div>
-    <div class="kv"><div class="k">辈分</div><div>${gen}</div><div class="k">姓名</div><div>${person.name}</div><div class="k">所生子女</div><div>${children.count}</div><div class="k">子女名字</div><div>${children.names}</div><div class="k">相属</div><div>${zodiac}</div><div class="k">父辈</div><div>${parent}</div><div class="k">记事</div><div>${note}</div></div>
-    <div class="record"><div class="label">人物记事</div><div class="text">${note}</div></div>`;
-  mgen.textContent = `${gen} · ${title}`;
-  mname.textContent = person.name;
-  mdesc.textContent = `第 ${genIndex} 世的人物节点。点击外部空白或关闭按钮可返回。`;
-  mchips.innerHTML = `<span class="chip">${gen}</span><span class="chip">${relation}</span><span class="chip">${zodiac}</span>`;
-  mnote.textContent = note;
-  modal.classList.add('open');
-}
-
-const supplements = [
-  {tag:'栏目 1', title:'旧谱序缺失说明', text:'网页不直接呈现旧谱序原文，把“旧谱序缺失”作为单独说明处理，避免和正文混在一起。'},
-  {tag:'栏目 2', title:'PDF 第 8-9 页补录', text:'第 8-9 页涉及的补充内容单独收纳，便于对照原 PDF 继续校读。'},
-  {tag:'栏目 3', title:'李姓的溯源', text:'把李姓源流相关文字独立成栏，作为谱前说明的一部分。'},
-  {tag:'栏目 4', title:'李姓的辉煌', text:'将李姓历史荣光、族望叙述与谱前导读分开呈现。'},
-  {tag:'栏目 5', title:'近代李氏族人中的英贤', text:'近代李氏人物的表述单独整理，方便后续接入人物详情。'},
-  {tag:'栏目 6', title:'李氏家训（2019 年 5 月）', text:'家训内容以独立栏目展示，保留时间标记，便于和正文区分。'},
-  {tag:'栏目 7', title:'前言', text:'前言放入独立栏，作为整页导读的起点。'},
-  {tag:'栏目 8', title:'“累世阀阅数代覃恩”说明', text:'对“累世阀阅数代覃恩”这一语汇单独作注，解释其在谱中的含义与出处。'}
-];
-
-function renderLineage(filter=''){
-  const f = filter.trim().toLowerCase();
-  suppEl.innerHTML = supplements.map(s => `<div class="supp-card"><div class="tag">${s.tag}</div><h4>${s.title}</h4><p>${s.text}</p></div>`).join('');
-  const renderPersonCard = (name, gen, title) => {
-    const meta = personMeta[name] || {};
-    const person = peopleIndex.get(name) || { name, note: meta.note || '表格见原页' };
-    const note = meta.note || person.note || '表格见原页';
-    const children = childSummary(meta.childrenNames);
-    return `<div class="lineage-card">
-      <h3>${name}</h3>
-      <div class="line">${note}</div>
-      <div class="minirow"><div class="k">辈分</div><div>${gen}</div><div class="k">所生子女</div><div>${children.count}</div><div class="k">子女名字</div><div>${children.names}</div><div class="k">相属</div><div>${meta.zodiac || '未详'}</div><div class="k">记事</div><div>${note}</div></div>
-      <div style="margin-top:10px"><button type="button" class="person-link" data-gen="${gen}" data-title="${title}" data-name="${name}" data-note="${encodeURIComponent(note)}">查看详情</button></div>
-    </div>`;
-  };
-
-  treeEl.innerHTML = generations.filter(g => {
-    const hay = [g.gen, g.title, ...g.people.map(p=>p.name+' '+p.note), ...g.people.flatMap(p => childMap[p.name] || [])].join(' ').toLowerCase();
-    return !f || hay.includes(f);
-  }).map(g => `
-    <div class="gen">
-      <div class="gen-card">
-        <div class="gen-head">
-          <div class="gen-title"><strong>${g.gen} · ${g.title}</strong><small>${g.people.length} 个人物</small></div>
-          <div class="muted small">按世代浏览</div>
-        </div>
-        <div class="gen-body">
-          <div class="lineage-grid">${g.people.map(p => renderPersonCard(p.name, g.gen, g.title)).join('')}</div>
-        </div>
-      </div>
-    </div>`).join('') || '<div class="muted">没有匹配结果。</div>';
-}
-
-function renderTree(filter=''){
-  const f = filter.trim().toLowerCase();
-  const matchesTree = (name) => {
-    const meta = personMeta[name] || {};
-    const person = peopleIndex.get(name) || { name, note: meta.note || '表格见原页' };
-    const hay = [name, meta.note || person.note || '', meta.childrenNames || '', meta.zodiac || '', (treeChildren[name] || []).join(' ')].join(' ').toLowerCase();
-    return !f || hay.includes(f) || (treeChildren[name] || []).some(matchesTree);
-  };
-
-  const renderNode = (name, level=0) => {
-    const meta = personMeta[name] || {};
-    const person = peopleIndex.get(name) || { name, note: meta.note || '表格见原页' };
-    const note = meta.note || person.note || '表格见原页';
-    const children = childSummary(meta.childrenNames);
-    const childNames = treeChildren[name] || [];
-    const expanded = !isTreeCollapsed(name);
-    const childHtml = childNames.length && expanded ? `<div class="tree-children">${childNames.map(ch => renderNode(ch, level + 1)).join('')}</div>` : '';
-    const hasChildren = childNames.length > 0;
-    return `<div class="tree-node" data-tree-node="${name}" style="margin-left:${level ? 10 : 0}px">
-      <div class="tree-row">
-        <button class="tree-toggle" type="button" data-tree-toggle="${name}">${hasChildren ? (expanded ? '▾' : '▸') : '•'}</button>
-        <div class="tree-card">
-          <div class="tree-top">
-            <div class="tree-name"><span class="tree-badge">${meta.gen || '未详'}</span><button class="person-link" data-gen="${meta.gen || ''}" data-title="${meta.gen || ''}" data-name="${name}" data-note="${encodeURIComponent(note)}">${name}</button></div>
-            <div class="tree-gen">父辈：${treeParent[name] || meta.parent || '未详'}</div>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">🌐 Rainy Whisper · Web Atlas</div>
+          <h1>我的网页集合站</h1>
+          <p class="lead">这里集中展示我其他仓库的 GitHub Pages / 自定义域名站点。每张卡片都自动带上站点标题、简介和本地截图，方便一眼浏览、快速跳转。重复链接已去重展示。</p>
+          <div class="hero-actions">
+            <a class="btn" href="#gallery">开始浏览</a>
+            <a class="btn" href="https://github.com/lzq1206" target="_blank" rel="noreferrer">GitHub 主页</a>
           </div>
-          <div class="tree-info">所生子女：${children.count}｜子女名字：${children.names}｜相属：${meta.zodiac || '未详'}</div>
-          <div class="tree-note">${note}</div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="k">站点数量</div><div class="v" id="siteCount">10</div><div class="d">已去重后的唯一链接数</div></div>
+          <div class="stat"><div class="k">展示方式</div><div class="v">卡片墙</div><div class="d">截图 + 自动简介 + 快速访问</div></div>
+          <div class="stat"><div class="k">来源类型</div><div class="v" id="sourceCount">2 类</div><div class="d">GitHub Pages / 自定义域名</div></div>
+          <div class="stat"><div class="k">更新状态</div><div class="v">静态页</div><div class="d">可直接部署到 GitHub Pages</div></div>
         </div>
       </div>
-      ${childHtml}
-    </div>`;
-  };
+    </section>
 
-  const roots = generations.flatMap(g => g.people.map(p => p.name)).filter(name => !treeParent[name]);
-  treeEl.innerHTML = roots.filter(matchesTree).map(name => renderNode(name, 0)).join('') || '<div class="muted">没有匹配结果。</div>';
-}
+    <section class="section" id="gallery">
+      <div class="section-head">
+        <div>
+          <h2>站点集合</h2>
+          <p>支持搜索、按来源筛选；卡片按你给出的顺序展示。</p>
+        </div>
+        <p id="hint">截图与简介已自动抓取完成。</p>
+      </div>
 
-function render(filter=''){
-  if (currentView === 'lineage') {
-    renderLineage(filter);
-  } else {
-    renderTree(filter);
-  }
+      <div class="toolbar">
+        <label class="search" aria-label="搜索站点">
+          <span>⌕</span>
+          <input id="search" type="search" placeholder="搜索站点名 / 简介 / 域名" autocomplete="off" />
+        </label>
+        <div class="filters" role="tablist" aria-label="来源筛选">
+          <button class="chip active" data-filter="all" type="button">全部</button>
+          <button class="chip" data-filter="GitHub Pages" type="button">GitHub Pages</button>
+          <button class="chip" data-filter="Custom domain" type="button">自定义域名</button>
+        </div>
+      </div>
 
-  storiesEl.innerHTML = stories.map(s => `<div class="story"><div class="tag">${s.tag}</div><h4>${s.title}</h4><p>${s.text}</p></div>`).join('');
-  const pop = [['1877',4],['1949',42],['2019',135]];
-  const max = Math.max(...pop.map(x=>x[1]));
-  barsEl.innerHTML = pop.map(([label,val]) => `<div class="bar-row"><div class="bar-label">${label}</div><div class="bar-track"><div class="bar-fill" style="width:${(val/max*100).toFixed(1)}%"></div></div><div class="bar-value">${val}</div></div>`).join('');
-}
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" hidden>没有匹配的站点。试试换个关键词。</div>
+    </section>
 
-render();
-syncViewTabs();
-searchEl.addEventListener('input', e => render(e.target.value));
-lineageTab.addEventListener('click', () => setView('lineage'));
-treeTab.addEventListener('click', () => setView('tree'));
+    <div class="footer">说明：简介优先使用页面标题/description 自动抓取；截图为本地生成的静态预览。若后续某站点更新了主页，只需重新运行抓取脚本即可刷新这一页。🦞</div>
+  </div>
 
-treeEl.addEventListener('click', e => {
-  const t = e.target.closest('[data-tree-toggle]');
-  if (t) {
-    e.stopPropagation();
-    toggleTreeNode(t.dataset.treeToggle);
-    render(searchEl.value);
-    return;
-  }
-  const p = e.target.closest('.person-link');
-  if (!p) return;
-  showDetail(p.dataset.gen, p.dataset.title, {name:p.dataset.name, note:decodeURIComponent(p.dataset.note)});
-});
+  <script src="data/site-data.js"></script>
+  <script>
+    const grid = document.getElementById('grid');
+    const empty = document.getElementById('empty');
+    const search = document.getElementById('search');
+    const hint = document.getElementById('hint');
+    const siteCount = document.getElementById('siteCount');
+    const sourceCount = document.getElementById('sourceCount');
+    const chips = [...document.querySelectorAll('.chip[data-filter]')];
 
-closeBtn.addEventListener('click', ()=> modal.classList.remove('open'));
-modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
-</script>
+    const data = (window.SITE_COLLECTION || []).filter(Boolean);
+    const sources = [...new Set(data.map(d => d.sourceType).filter(Boolean))];
+    siteCount.textContent = String(data.length);
+    sourceCount.textContent = `${sources.length} 类`;
+    hint.textContent = `已抓取 ${data.length} 个站点的标题、简介和截图。`;
+
+    let activeFilter = 'all';
+
+    function esc(s) {
+      return String(s || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function matches(item, q, filter) {
+      const hay = [item.label, item.title, item.summary, item.hostname, item.url, item.sourceType].join(' ').toLowerCase();
+      const okSearch = !q || hay.includes(q.toLowerCase());
+      const okFilter = filter === 'all' || item.sourceType === filter;
+      return okSearch && okFilter;
+    }
+
+    function render() {
+      const q = search.value.trim();
+      const items = data.filter(item => matches(item, q, activeFilter));
+      grid.innerHTML = items.map(item => `
+        <article class="card">
+          <a class="shot" href="${esc(item.url)}" target="_blank" rel="noreferrer" aria-label="打开 ${esc(item.title)}">
+            <div class="badge-row">
+              <span class="badge">${esc(item.sourceType || '站点')}</span>
+              <span class="badge"><strong>${esc(item.label)}</strong></span>
+            </div>
+            ${item.screenshot ? `<img src="${esc(item.screenshot)}" alt="${esc(item.title)} 的截图" loading="lazy" />` : `<div style="height:100%;display:grid;place-items:center;color:#9bb0d7;font-weight:800;letter-spacing:.08em">NO PREVIEW</div>`}
+          </a>
+          <div class="content">
+            <div class="title">
+              <h3>${esc(item.title)}</h3>
+              <div class="mini">${esc(item.hostname)}</div>
+            </div>
+            <p class="summary">${esc(item.summary)}</p>
+            <div class="meta">
+              <span class="tag">${esc(item.sourceType)}</span>
+              <span class="tag">${esc(item.hostname)}</span>
+            </div>
+            <div class="actions">
+              <a class="ghost primary" href="${esc(item.url)}" target="_blank" rel="noreferrer">打开站点</a>
+              ${item.screenshot ? `<a class="ghost" href="${esc(item.screenshot)}" target="_blank" rel="noreferrer">查看截图</a>` : ''}
+            </div>
+          </div>
+        </article>
+      `).join('');
+      empty.hidden = items.length !== 0;
+    }
+
+    chips.forEach(btn => btn.addEventListener('click', () => {
+      chips.forEach(x => x.classList.toggle('active', x === btn));
+      activeFilter = btn.dataset.filter || 'all';
+      render();
+    }));
+
+    search.addEventListener('input', render);
+    render();
+  </script>
 </body>
 </html>
